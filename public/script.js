@@ -428,7 +428,7 @@ function actualizarColorPaspartu () {
       $('.shadow').css('border-width', '1px')
     }
     else {
-      $('.shadow').css('border-color', '#555555')
+      $('.shadow').css('border-color', '#d9d9d9')
       $('.shadow').css('border-width', '1px')
     }
   }
