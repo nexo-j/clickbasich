@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,700' rel='stylesheet' type='text/css'>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <script src="https://use.fontawesome.com/1865d15249.js"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-118119648-1"></script>
+    <script src="https://browser.sentry-cdn.com/5.16.1/bundle.min.js" integrity="sha384-XeIbINcUQP10HtmVHwZigannjNDpoQRe+uhAoW9J5HU5dHFpilP164LjqO78xtIB" crossorigin="anonymous"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-118119648-1');
+    </script>
+    <!-- Hotjar Tracking Code for www.clickmarqueteria.com -->
+    <script>
+        (function(h, o, t, j, a, r) {
+            h.hj = h.hj || function() {
+                (h.hj.q = h.hj.q || []).push(arguments)
+            };
+            h._hjSettings = {
+                hjid: 1759535,
+                hjsv: 6
+            };
+            a = o.getElementsByTagName('head')[0];
+            r = o.createElement('script');
+            r.async = 1;
+            r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+            a.appendChild(r);
+        })(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
+    </script>
+    <title>Haz Click y Enmarca</title>
+    <link href="../css/main.css" rel="stylesheet">
+
+    <!-- Primary Meta Tags -->
+    <title>CLICK - App de Marquetería</title>
+    <meta name="title" content="CLICK - App de Marquetería">
+    <meta name="description" content="Haz Click y enmarca lo que quieras sin salir de casa. Imprimimos, enmarcamos y enviamos tus fotos, arte, diplomas o afiches a domicilio.">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://marcos.clickmarqueteria.com/images/animation.gif">
+    <meta property="og:title" content="CLICK - App de Marquetería">
+    <meta property="og:description" content="Haz Click y enmarca lo que quieras sin salir de casa. Imprimimos, enmarcamos y enviamos tus fotos, arte, diplomas o afiches a domicilio.">
+    <meta property="og:image" content="https://marcos.clickmarqueteria.com/images/animation.gif">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://marcos.clickmarqueteria.com/">
+    <meta property="twitter:title" content="CLICK - App de Marquetería">
+    <meta property="twitter:description" content="Haz Click y enmarca lo que quieras sin salir de casa. Imprimimos, enmarcamos y enviamos tus fotos, arte, diplomas o afiches a domicilio.">
+    <meta property="twitter:image" content="https://marcos.clickmarqueteria.com/images/animation.gif">
+</head>
+
+<body class="marcom">
+
+    <div class="veil" id="picture-examples-veil">
+        <div class="veil-modal">
+            <a href="#" class="close-link">✖</a>
+            <img id="picture-example-img" src="">
+        </div>
+    </div>
+
+    <header>
+        <a href="//clickmarqueteria.com"><img src="../images/Click_Logo.png"></a>
+        <a href="//clickmarqueteria.com" class="back">Regresa a la tienda<span class="x">✕</span></a></header>
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="thumbnail off">
+                <div class="background-container">
+                    <picture>
+                        <img class="frame-background" sizes="(max-width:780px) 100vw, 100vw-350px" src="../images/backgrounds/ParedBlanca.jpg" alt="">
+                    </picture>
+                    <div class="holder">
+                        <div class="img-rounded frame-only">
+                            <div class="container-sm shadow"></div>
+                            <div class="shadowoverlay">
+                                <div class="show-off"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <ol id="menu-picker-background">
+                    </ol>
+                </div>
+                <a class="size-guide-text" href="#" style="display:block;">Guía de tamaños</a>
+                <img class="size-guide-image" src="../images/guiadetamano.jpg" />
+                <ol class="picture-examples large-only">
+                </ol>
+            </div>
+            <div class="panel-body">
+                <!-- <p>¡Enmarca tu foto!</p> -->
+                <form name="document-form" novalidate>
+                    <a class="sizepicker-back" href="/dimensiones/">
+                        <i class="fa fa-arrow-left" aria-hidden="true"></i> <span class="back-text form-description">Cambia el tamaño</span>
+                    </a>
+                    <p class="form-title morandi">Diseña tu cuadro:</p>
+                    <p class="form-title">Marco estandar:</p>
+                    <p class="form-description">Nuestros marcos CLICK son en madera natural y tienen una profundidad de 2cm</p>
+                    <div class="form-group cppp">
+                        <ol class='menu-picker' id="menu-picker-wood"></ol>
+                    </div>
+                    <p class="form-title">Ancho de frente:</p>
+                    <div class="form-group cppp" id="widthOptions">
+                    </div>
+                    <!-- Begin Mailchimp Signup Form -->
+                    <div class='out-of-stock-form-frame' style="display:none">
+                        <p style="color:red">Stock Agotado. Introduzca su email y le avisaremos cuando este disponible</p>
+                        <label for="mce-EMAIL">Email</label>
+                        <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+                        <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_b88f39447d4cbd69b5fc2e357_1f5d5ee292" tabindex="-1" value=""></div>
+                        <div class="clear">
+                            <button id="subscribe" name="subscribe" class="button btn">Subscribe</button>
+                        </div>
+                        <div class="mce_response"> </div>
+                    </div>
+                    <p class="form-title">Agrega Paspartú:</p>
+                    <p class="form-description">Borde que se deja entre el marco y tu obra para resaltarla aún más.</p>
+                    <div class="form-group cppp">
+                        <ol class='menu-picker' id="menu-picker-paspartu">
+                        </ol>
+                    </div>
+                    <div class='out-of-stock-form-paspartu' style="display:none">
+                        <p style="color:red">Stock Agotado. Introduzca su email y le avisaremos cuando este disponible</p>
+                        <label for="mce-EMAIL">Email</label>
+                        <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+                        <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_b88f39447d4cbd69b5fc2e357_1f5d5ee292" tabindex="-1" value=""></div>
+                        <div class="clear">
+                            <button id="subscribe" name="subscribe" class="button btn">Subscribe</button>
+                        </div>
+                        <div class="mce_response"> </div>
+                    </div>
+                    <div class="form-group cppp">
+                        <div class="slider-container">
+                            <input type="range" min="0" max="7" value="2" step=1 class="slider" id="paspartuSlider" />
+                            <ol class="slider-labels" id="paspartuWidths">
+                            </ol>
+                        </div>
+                    </div>
+                    <p class="form-title">Tipo de Acrílico:</p>
+                    <p class="form-description">En CLICK no usamos vidrio. Usamos acrílico 100% transparente que es más liviano y resistente.</p>
+                    <div class="form-group cppp acrilic" id='acrilics'>
+                    </div>
+                    <div class="form-group cppp">
+                        <ol class="picture-examples medium-only">
+                        </ol>
+                    </div>
+
+                    <div class="form-group cppp">
+                        <a href="#" class="toggle" data-toggle="optionals"><label class="form-title">Opcionales +</label></a>
+                        <div id="optionals" style="display:none">
+                            <div class="cppp">
+                                <label id="hang-stickers" class="checkbox path"><input id="hang-stickers-input" type="checkbox" ><svg viewBox="0 0 21 21"><path d="M5,10.75 L8.5,14.25 L19.4,2.3 C18.8333333,1.43333333 18.0333333,1 17,1 L4,1 C2.35,1 1,2.35 1,4 L1,17 C1,18.65 2.35,20 4,20 L17,20 C18.65,20 20,18.65 20,17 L20,7.99769186"></path>
+										</svg><span>Agrega <a class="underline" href="https://clickmarqueteria.com/products/cintas-command-de-3m-para-colgar-cuadros" target="_blank">Cintas 3M</a> para colgar tus cuadros sin abrir huecos a las paredes.<a href="#" class="hint top" data-hint="Ya calculamos automaticamente la cantidad de cintas que necesitas para este pedido">?</a></span></label>
+                            </div>
+                            <div class="cppp">
+                                <label id="gift-wrap" class="checkbox path"><input id="gift-wrap-input" type="checkbox" ><svg viewBox="0 0 21 21"><path d="M5,10.75 L8.5,14.25 L19.4,2.3 C18.8333333,1.43333333 18.0333333,1 17,1 L4,1 C2.35,1 1,2.35 1,4 L1,17 C1,18.65 2.35,20 4,20 L17,20 C18.65,20 20,18.65 20,17 L20,7.99769186"></path>
+										</svg><span> Envuelve tus cuadros en nuestro <a class="underline" href="https://clickmarqueteria.com/products/empaque-de-regalo-x-green-amarilla" target="_blank">papel de regalo</a> diseñado por Green Amarilla</span></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group cppp precioline">
+                        <span id="precio">0</span><span id="small-price-text">IVA Incluido</span>
+                    </div>
+
+                    <button class="btn btn-filestack btn-block submit">Agregar al carrito</button>
+                    <p>Selecciona el modo de entrega en el próximo paso</p>
+                    <p class="description-thingy">
+                        <span class="full-desc">
+									<b>Medidas de tu imagen:</b><br/>
+									Alto: <span id="alto"></span>cm - Largo: <span id="ancho"></span>cm<br/><span class="invsbl"> -</span>
+                        <b>Medidas totales del marco:</b><br /> Alto: <span id="altot"></span>cm - Largo: <span id="anchot"></span>cm<br/><span class="invsbl"> -</span>
+                        <b>Marco: </b><span id="acabado">Resina Negro</span> <span id="marco">2</span>cm <br/><span class="invsbl"> -</span>
+                        <b>Paspartú: </b><span id="paspartuc">Blanco</span> <span id="borde">7</span>cm<br/><span class="invsbl"> -</span>
+                        <b>Frente: </b><span id="frente"></span><br/><span class="invsbl"> -</span>
+                        </span>
+                    </p>
+                    <div></div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- JS -->
+    <script src="//code.jquery.com/jquery-3.0.0.min.js"></script>
+    <script src="../js/utilities.js" crossorigin="anonymous"></script>
+    <script src="https://static.filestackapi.com/filestack-js/3.x.x/filestack.min.js"></script>
+    <script src="../script.js" crossorigin="anonymous"></script>
+    <div id="texture-floating"><img src=""><span class="desc-texture"></span></div>
+</body>
+
+</html>
