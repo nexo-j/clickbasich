@@ -1,5 +1,14 @@
-var admin = require('firebase-admin')
-var serviceAccount = require('./click-1554562120566-firebase-adminsdk-da56t-7617176fb3.json')
+const admin = require('firebase-admin')
+
+let serviceAccount
+
+if (process.env.FIREBASE_SERVICE_ACCOUNT) {
+  serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT)
+} else {
+  serviceAccount = require('./click-1554562120566-firebase-adminsdk-da56t-7617176fb3.json')
+}
+
+
 const Sentry = require('./sentry')
 
 admin.initializeApp({
