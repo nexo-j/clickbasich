@@ -33,7 +33,9 @@ var db = {
       photoWallDiscount: 0.1,
       fondo: 1
     }
-  ]
+  ],
+  FrameCategories: [],
+  SimulatorTexts: []
 }
 const collections = ['Frames', 'Paspartus', 'Acrilics', 'SimulatorVariables', 'Backgrounds', 'FrameCategories', 'SimulatorTexts']
 collections.forEach(collection => {

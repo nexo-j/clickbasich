@@ -111,3 +111,17 @@ Colección administrable que centraliza los textos visibles del simulador para q
 **Endpoint:** `GET /inventory` → campo `simulatorTexts` (array de todos los documentos activos).
 
 **Nota BL-09 (pendiente):** La implementación de lectura dinámica en el frontend — reemplazar los textos hardcodeados en `marco/index.html`, `imagen/index.html` y `mosaico/index.html` por los valores de esta colección — corresponde a **BL-09**, no a BL-03.
+
+---
+
+### Mejoras defensivas de lectura `[BL-04]`
+
+Cambios aplicados en `db.js` y `server.js` para robustecer la lectura de datos sin alterar el contrato funcional del endpoint:
+
+| Mejora | Archivo | Detalle |
+|---|---|---|
+| Valores por defecto | `db.js` | `FrameCategories: []` y `SimulatorTexts: []` inicializados como arrays vacíos antes del primer snapshot de Firestore |
+| Ordenamiento | `server.js` | `FrameCategories` ordenado por `posicion` · `SimulatorTexts` ordenado por `position` |
+| Filtrado de inactivos | `server.js` | Se excluyen documentos de `SimulatorTexts` con `active === false`. Si el campo no existe, el documento se conserva por compatibilidad |
+
+> **BL-05 (pendiente):** Definirá y validará la estructura final de respuesta del endpoint `GET /inventory`, incluyendo tipado, campos requeridos y manejo de colecciones vacías.

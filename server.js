@@ -113,8 +113,12 @@ app.route('/inventory')
       paspartuWidths: db.SimulatorVariables[0].paspartuWidths,
       acrilics: db.Acrilics,
       backgrounds: db.Backgrounds,
-      frameCategories: db.FrameCategories,
-      simulatorTexts: db.SimulatorTexts
+      frameCategories: (db.FrameCategories || [])
+        .slice()
+        .sort((a, b) => (a.posicion ?? 0) - (b.posicion ?? 0)),
+      simulatorTexts: (db.SimulatorTexts || [])
+        .filter(t => t.active !== false)
+        .sort((a, b) => (a.position ?? 0) - (b.position ?? 0))
     }
     res.json(inventory)
   })
