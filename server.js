@@ -113,7 +113,8 @@ app.route('/inventory')
       paspartuWidths: db.SimulatorVariables[0].paspartuWidths,
       acrilics: db.Acrilics,
       backgrounds: db.Backgrounds,
-      frameCategories: db.FrameCategories
+      frameCategories: db.FrameCategories,
+      simulatorTexts: db.SimulatorTexts
     }
     res.json(inventory)
   })

@@ -35,7 +35,7 @@ var db = {
     }
   ]
 }
-const collections = ['Frames', 'Paspartus', 'Acrilics', 'SimulatorVariables', 'Backgrounds', 'FrameCategories']
+const collections = ['Frames', 'Paspartus', 'Acrilics', 'SimulatorVariables', 'Backgrounds', 'FrameCategories', 'SimulatorTexts']
 collections.forEach(collection => {
   const query = firestore.collection(collection)
   const observer = query.onSnapshot(querySnapshot => {
