@@ -124,4 +124,22 @@ Cambios aplicados en `db.js` y `server.js` para robustecer la lectura de datos s
 | Ordenamiento | `server.js` | `FrameCategories` ordenado por `posicion` · `SimulatorTexts` ordenado por `position` |
 | Filtrado de inactivos | `server.js` | Se excluyen documentos de `SimulatorTexts` con `active === false`. Si el campo no existe, el documento se conserva por compatibilidad |
 
-> **BL-05 (pendiente):** Definirá y validará la estructura final de respuesta del endpoint `GET /inventory`, incluyendo tipado, campos requeridos y manejo de colecciones vacías.
+> **BL-05:** Contrato defensivo implementado — ver sección siguiente.
+
+---
+
+## Contrato del endpoint `GET /inventory` `[BL-05]`
+
+Respuesta JSON con los siguientes campos garantizados. Ningún campo devuelve `undefined`; todos tienen un valor por defecto en caso de que Firestore aún no haya respondido.
+
+| Campo | Tipo | Valor por defecto | Fuente Firestore | Descripción |
+|---|---|---|---|---|
+| `frames` | `array` | `[]` | `Frames` | Marcos disponibles con variantes de ancho y precio |
+| `paspartus` | `array` | `[]` | `Paspartus` | Opciones de paspartú con nombre y precio |
+| `paspartuWidths` | `string` | `""` | `SimulatorVariables[0].paspartuWidths` | Anchos de paspartú separados por coma. Formato actual: `"0,3,5,7"`. Cualquier conversión a array debe realizarse en el frontend o en una mejora posterior |
+| `acrilics` | `array` | `[]` | `Acrilics` | Tipos de acrílico disponibles |
+| `backgrounds` | `array` | `[]` | `Backgrounds` | Fondos de pared para el simulador |
+| `frameCategories` | `array` | `[]` | `FrameCategories` | Categorías de marcos ordenadas por `posicion` (BL-01) |
+| `simulatorTexts` | `array` | `[]` | `SimulatorTexts` | Textos administrables con `active !== false`, ordenados por `position` (BL-03) |
+
+**Compatibilidad:** todos los campos preexistentes (`frames`, `paspartus`, `paspartuWidths`, `acrilics`, `backgrounds`) mantienen el mismo formato de respuesta que tenían antes de BL-01.

@@ -108,11 +108,11 @@ app.route('/imageurl/:productId')
 app.route('/inventory')
   .get(function (req, res) {
     const inventory = {
-      frames: db.Frames,
-      paspartus: db.Paspartus,
-      paspartuWidths: db.SimulatorVariables[0].paspartuWidths,
-      acrilics: db.Acrilics,
-      backgrounds: db.Backgrounds,
+      frames: db.Frames || [],
+      paspartus: db.Paspartus || [],
+      paspartuWidths: (db.SimulatorVariables[0] || {}).paspartuWidths || '',
+      acrilics: db.Acrilics || [],
+      backgrounds: db.Backgrounds || [],
       frameCategories: (db.FrameCategories || [])
         .slice()
         .sort((a, b) => (a.posicion ?? 0) - (b.posicion ?? 0)),
