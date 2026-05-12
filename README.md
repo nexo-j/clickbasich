@@ -47,6 +47,35 @@ Colección existente de marcos, extendida con campos de categoría y material.
 
 ---
 
+## Normalización de vistas HTML `[BL-07]`
+
+Alcance conservador: se alinearon diferencias innecesarias de markup entre las tres vistas sin extraer componentes ni cambiar arquitectura.
+
+### Cambios aplicados
+
+| Archivo | Cambio | Justificación |
+|---|---|---|
+| `marco/index.html` | Removido `style="display:block;"` del link `.size-guide-text` | Imagen y mosaico no tienen ese estilo inline |
+| `marco/index.html` | `id='acrilics'` → `id="acrilics"` | Consistencia con imagen y mosaico |
+| `marco/index.html` | `class='menu-picker'` → `class="menu-picker"` en los dos `ol` del formulario | Consistencia de quoting |
+| Los tres archivos | `class='out-of-stock-form-frame'` y `class='out-of-stock-form-paspartu'` → comillas dobles | Consistencia; estos selectores son usados por `script.js` |
+| `imagen/index.html`, `mosaico/index.html` | `class='menu-picker'` → `class="menu-picker"` en `ol` de marcos y paspartú | Consistencia |
+
+### Diferencias legítimas conservadas
+
+| Elemento | Motivo |
+|---|---|
+| Título "Diseña tu mosaico:" vs "tu cuadro:" | Copy diferente por producto — pendiente BL-09 |
+| Modal sizepicker en imagen/mosaico | Flujo de tamaño diferente al de marco |
+| Grid filas×columnas en mosaico | Exclusivo del producto mosaico |
+| Sección Opcionales ausente en mosaico | Decisión de producto |
+| Labels de precio distintos por vista | Copy diferente — pendiente BL-09 |
+| `.description-thingy` con campos distintos | Marco no incluye impresión de imagen |
+
+> **Mejora futura:** la extracción del formulario común a un archivo partial/template compartido queda documentada como tarea posterior a BL-09, una vez que los textos sean administrables y la estructura esté estabilizada.
+
+---
+
 ### SimulatorTexts `[BL-03]`
 
 Colección administrable que centraliza los textos visibles del simulador para que sean editables desde Kandinsky/Firebase sin modificar código.
