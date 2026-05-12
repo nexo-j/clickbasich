@@ -143,3 +143,37 @@ Respuesta JSON con los siguientes campos garantizados. Ningún campo devuelve `u
 | `simulatorTexts` | `array` | `[]` | `SimulatorTexts` | Textos administrables con `active !== false`, ordenados por `position` (BL-03) |
 
 **Compatibilidad:** todos los campos preexistentes (`frames`, `paspartus`, `paspartuWidths`, `acrilics`, `backgrounds`) mantienen el mismo formato de respuesta que tenían antes de BL-01.
+
+---
+
+## Render dinámico de categorías en frontend `[BL-06]`
+
+Cambios aplicados en `public/script.js` y `public/css/main.css`.
+
+### Lógica de agrupación (función `renderFrames`)
+
+| Condición | Comportamiento |
+|---|---|
+| `frameCategories` vacío o no es array | Lista plana de todos los frames (comportamiento original) |
+| Categorías activas presentes | Frames agrupados bajo su `categorySlug` |
+| Frame sin `categorySlug` | Aparece en categoría fallback **"Más opciones"** al final |
+| Categoría activa sin frames asociados | Se omite silenciosamente |
+| Ningún frame visible tras agrupar | Regresa a lista plana como fallback final |
+
+### Criterios de selección inicial
+
+El primer frame seleccionable (no encabezado) recibe `trigger('click')` automáticamente al cargar, igual que antes.
+
+### Estilo de encabezados de categoría
+
+Se agregó `ol.menu-picker li.category-header` en `main.css`: etiqueta no interactiva, mayúsculas, gris, `pointer-events: none`.
+
+### Dependencia con BL-02
+
+BL-06 está completamente implementado con fallback defensivo. Sin embargo, **la agrupación por categorías solo funciona correctamente cuando los frames en Firestore tienen el campo `categorySlug` asignado** (migración manual de BL-02). Mientras esa migración no esté completa, todos los frames sin `categorySlug` aparecerán bajo "Más opciones".
+
+| Frame | Categoría esperada | Requiere BL-02 en Firestore |
+|---|---|---|
+| Resina Negro | Marco Standard (`standard`) | ✅ Pendiente migración |
+| Resina Blanco | Marco Standard (`standard`) | ✅ Pendiente migración |
+| Madera Clara | Marco Premium (`premium`) | ✅ Pendiente migración |

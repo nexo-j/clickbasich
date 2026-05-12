@@ -309,16 +309,80 @@ $('#menu-picker-paspartu').on('click', 'li input', function (event) {
   }
 })
 
+function frameItemHtml (frame, index) {
+  return `<li><input data-images="${frame.gallery_images}" stock="true" type="radio" name="color-selection" id="${frame.name}" border_image=${frame.border_image} index=${index} example_image=${frame.example_image}><label for="${frame.name}"><img src="${frame.thumbnail}"><div class="checkthing"></div></label></li>`
+}
+
+function renderFrames (sortedFrames, frameCategories) {
+  const activeCategories = Array.isArray(frameCategories)
+    ? frameCategories.filter(c => c.activo !== false)
+    : []
+
+  // No active categories → flat list (comportamiento original)
+  if (activeCategories.length === 0) {
+    for (var i = 0; i < sortedFrames.length; i++) {
+      $('#menu-picker-wood').append(frameItemHtml(sortedFrames[i], i))
+    }
+    $('#menu-picker-wood').children().first().find('input').trigger('click')
+    return
+  }
+
+  // Agrupar frames por categorySlug
+  const categoryMap = {}
+  const uncategorizedIndices = []
+
+  sortedFrames.forEach(function (frame, i) {
+    if (frame.categorySlug) {
+      if (!categoryMap[frame.categorySlug]) categoryMap[frame.categorySlug] = []
+      categoryMap[frame.categorySlug].push(i)
+    } else {
+      uncategorizedIndices.push(i)
+    }
+  })
+
+  var hasVisibleFrames = false
+
+  // Renderizar categorías activas que tengan al menos un frame
+  activeCategories.forEach(function (category) {
+    var slug = category.identificador
+    var indices = categoryMap[slug] || []
+    if (indices.length === 0) return
+    hasVisibleFrames = true
+    $('#menu-picker-wood').append('<li class="category-header">' + category.nombre + '</li>')
+    indices.forEach(function (i) {
+      $('#menu-picker-wood').append(frameItemHtml(sortedFrames[i], i))
+    })
+  })
+
+  // Frames sin categorySlug → categoría fallback visible
+  if (uncategorizedIndices.length > 0) {
+    hasVisibleFrames = true
+    $('#menu-picker-wood').append('<li class="category-header">Más opciones</li>')
+    uncategorizedIndices.forEach(function (i) {
+      $('#menu-picker-wood').append(frameItemHtml(sortedFrames[i], i))
+    })
+  }
+
+  // Si ningún frame fue renderizado → lista plana como fallback final
+  if (!hasVisibleFrames) {
+    $('#menu-picker-wood').html('')
+    for (var j = 0; j < sortedFrames.length; j++) {
+      $('#menu-picker-wood').append(frameItemHtml(sortedFrames[j], j))
+    }
+    $('#menu-picker-wood').children().first().find('input').trigger('click')
+    return
+  }
+
+  $('#menu-picker-wood li:not(.category-header)').first().find('input').trigger('click')
+}
+
 function checkInvetory () {
   $.ajax('/inventory').done(function (inventory) {
     // Populate Frames
     $('#menu-picker-wood').html('')
     frames = inventory.frames
     frames.sort((a, b) => a.position - b.position)
-    for (var frame in frames) {
-      $('#menu-picker-wood').append(`<li><input data-images="${frames[frame].gallery_images}" stock="true" type="radio" name="color-selection" id="${frames[frame].name}" border_image=${frames[frame].border_image} index=${frame} example_image=${frames[frame].example_image}><label for="${frames[frame].name}"><img src="${frames[frame].thumbnail}"><div class="checkthing"></div></label></li><li>`)
-    }
-    $('#menu-picker-wood').children().first().find('input').trigger('click')
+    renderFrames(frames, inventory.frameCategories)
     // Populate paspartu
     const paspartus = inventory.paspartus
     paspartus.sort((a, b) => a.position - b.position)
@@ -328,7 +392,9 @@ function checkInvetory () {
     })
     $("#menu-picker-paspartu li input[nombre='Blanco']").trigger('click')
     // Populate paspartu widths
-    paspartuWidths = inventory.paspartuWidths.split(',').map(val => Number(val))
+    paspartuWidths = inventory.paspartuWidths
+      ? inventory.paspartuWidths.split(',').map(Number)
+      : []
     populatePaspartuWidths()
     // Populate Acrilics
     const acrilics = inventory.acrilics
