@@ -206,3 +206,81 @@ BL-06 está completamente implementado con fallback defensivo. Sin embargo, **la
 | Resina Negro | Marco Standard (`standard`) | ✅ Pendiente migración |
 | Resina Blanco | Marco Standard (`standard`) | ✅ Pendiente migración |
 | Madera Clara | Marco Premium (`premium`) | ✅ Pendiente migración |
+
+---
+
+## Textos administrables en frontend `[BL-09]`
+
+**Objetivo:** conectar los textos del HTML a la colección `SimulatorTexts` de Firestore (cargada vía `/inventory`), usando el texto hardcodeado del HTML como fallback. Si `SimulatorTexts` está vacío, la app se ve idéntica que antes.
+
+### Implementación en `public/script.js`
+
+**Variable global `textsMap`:** se declara en el scope principal para que esté disponible fuera de `checkInvetory`.
+
+**Construcción del mapa (dentro de `checkInvetory`):**
+```js
+textsMap = {}
+;(inventory.simulatorTexts || []).forEach(function (t) {
+  if (t.key && t.value && t.active !== false) {
+    textsMap[t.key] = t.value
+  }
+})
+applySimulatorTexts()
+```
+Solo se incluyen documentos con `key` válido, `value` no vacío y `active !== false` (doble protección junto al filtro del backend en BL-04).
+
+**Helper `getText(key, fallback)`:** devuelve `textsMap[key]` si existe, o `fallback` en caso contrario. Útil para reemplazos programáticos fuera del DOM.
+
+**Función `applySimulatorTexts()`:** recorre todos los elementos con `data-text-key` en el DOM activo:
+- Si la clave no existe en `textsMap`, **no hace nada** (conserva el texto HTML como fallback).
+- Si el elemento tiene `data-text-attr` (ej. `placeholder`, `title`, `alt`), reemplaza ese atributo.
+- Si no tiene `data-text-attr`, reemplaza el texto interno con `.text()`.
+
+### Atributo `data-text-key`
+
+Se agrega en los tres HTML sobre los elementos cuyo texto sea seguro de reemplazar con `.text()` (sin hijos con contenido propio):
+
+| Clave | Elemento | Vistas |
+|---|---|---|
+| `marco.header.title` | `<p class="form-title morandi">` | marco |
+| `imagen.header.title` | `<p class="form-title morandi">` | imagen |
+| `mosaico.header.title` | `<p class="form-title morandi">` | mosaico |
+| `global.frame.title` | `<p class="form-title">Marco estandar:</p>` | las tres |
+| `global.frame.description` | `<p class="form-description">Te ofrecemos nuevas opciones…</p>` | las tres |
+| `global.frame.width.title` | `<p class="form-title">Ancho de frente:</p>` | las tres |
+| `global.paspartu.title` | `<p class="form-title">Agrega Paspartú:</p>` | las tres |
+| `global.paspartu.description` | `<p class="form-description">Borde que se deja…</p>` | las tres |
+| `global.acrilic.title` | `<p class="form-title">Tipo de Acrílico:</p>` | las tres |
+| `global.acrilic.description` | `<p class="form-description">En CLICK no usamos vidrio…</p>` | las tres |
+| `global.cart.button` | `<button class="submit">Agregar al carrito</button>` | las tres |
+| `global.cart.delivery` | `<p>Selecciona el modo de entrega…</p>` | las tres |
+| `global.navigation.sizeGuide` | `<a class="size-guide-text">Guía de tamaños</a>` | las tres |
+| `global.navigation.changeSize` | `<span class="back-text">Cambia el tamaño</span>` | marco |
+| `imagen.controls.changeSize` | `<a class="acontrols sizepicker">Cambia el tamaño</a>` | imagen |
+| `imagen.controls.upload` | `<a class="acontrols filepicker">Sube otra imagen</a>` | imagen |
+| `imagen.controls.filter` | `<span>Filtro Blanco y Negro</span>` | imagen, mosaico |
+| `global.sizepicker.recommended` | `<h4>Por la resolución de tu imagen…</h4>` | imagen, mosaico |
+| `global.sizepicker.notRecommended` | `<h4 id="not-recommended">Los siguientes tamaños…</h4>` | imagen, mosaico |
+| `global.sizepicker.tooSmall` | `<h4 id="too-small">La resolución de la imagen…</h4>` | imagen, mosaico |
+
+### Atributo `data-text-attr` (opcional)
+
+Para reemplazar atributos en vez de texto interno:
+```html
+<input data-text-key="global.search.placeholder" data-text-attr="placeholder" placeholder="Buscar...">
+```
+Si `data-text-attr` existe, `applySimulatorTexts` usará `.attr(attr, value)` en vez de `.text(value)`.
+
+### Criterio de fallback
+
+1. Si `SimulatorTexts` está vacío → `textsMap = {}` → ningún `data-text-key` se modifica → la app se ve igual que antes.
+2. Si una clave no está en Firestore → el elemento conserva su texto HTML hardcodeado.
+3. Si `value` está vacío en Firestore → la clave no entra al mapa → el elemento conserva su texto HTML.
+4. Los textos hardcodeados en el HTML **no se eliminan**; son el fallback permanente.
+
+### Elementos excluidos de BL-09 (contenido mixto)
+
+Los siguientes elementos tienen nodos hijos con contenido propio y no son seguros para `.text()` sin trabajo adicional; quedan como mejora futura:
+- `<h2>Elige el tamaño de tu imagen <span class="dark">(ancho x alto)</span></h2>`
+- `<a href="//clickmarqueteria.com" class="back">Regresa a la tienda<span class="x">✕</span></a>`
+- Textos dentro de `<label>` con SVG (excepto los `<span>` de texto puro ya instrumentados).

@@ -20,6 +20,7 @@ window.vwpercm = imageWidthInvw / 20 // vw per cm
 var anchoPaspartu = 7
 var frames = []
 var paspartuWidths = []
+var textsMap = {}
 
 // Preload images for better performance
 var Image1 = new Image()
@@ -309,6 +310,24 @@ $('#menu-picker-paspartu').on('click', 'li input', function (event) {
   }
 })
 
+function getText (key, fallback) {
+  return textsMap[key] || fallback
+}
+
+function applySimulatorTexts () {
+  $('[data-text-key]').each(function () {
+    var key = $(this).attr('data-text-key')
+    var value = textsMap[key]
+    if (!value) return
+    var attr = $(this).attr('data-text-attr')
+    if (attr) {
+      $(this).attr(attr, value)
+    } else {
+      $(this).text(value)
+    }
+  })
+}
+
 function frameItemHtml (frame, index) {
   return `<li><input data-images="${frame.gallery_images}" stock="true" type="radio" name="color-selection" id="${frame.name}" border_image=${frame.border_image} index=${index} example_image=${frame.example_image}><label for="${frame.name}"><img src="${frame.thumbnail}"><div class="checkthing"></div></label></li>`
 }
@@ -378,6 +397,14 @@ function renderFrames (sortedFrames, frameCategories) {
 
 function checkInvetory () {
   $.ajax('/inventory').done(function (inventory) {
+    // Build simulator texts map
+    textsMap = {}
+    ;(inventory.simulatorTexts || []).forEach(function (t) {
+      if (t.key && t.value && t.active !== false) {
+        textsMap[t.key] = t.value
+      }
+    })
+    applySimulatorTexts()
     // Populate Frames
     $('#menu-picker-wood').html('')
     frames = inventory.frames

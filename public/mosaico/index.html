@@ -67,11 +67,11 @@
     <div class="veil" id="sizepicker">
         <div class="veil-modal">
             <h2>Elige el tamaño de tu imagen <span class="dark">(ancho x alto)</span></h2>
-            <h4>Por la resolución de tu imagen, estos tamaños son ideales para impresión:</h4>
+            <h4 data-text-key="global.sizepicker.recommended">Por la resolución de tu imagen, estos tamaños son ideales para impresión:</h4>
             <div id="options" class="sizeoptions">
             </div>
-            <h4 id="not-recommended">Los siguientes tamaños no se recomiendan debido a la resolución de la imagen:</h4>
-            <h4 id="too-small">La resolución de la imagen es baja. Te recomendamos subir una imagen con mayor resolución.</h4>
+            <h4 id="not-recommended" data-text-key="global.sizepicker.notRecommended">Los siguientes tamaños no se recomiendan debido a la resolución de la imagen:</h4>
+            <h4 id="too-small" data-text-key="global.sizepicker.tooSmall">La resolución de la imagen es baja. Te recomendamos subir una imagen con mayor resolución.</h4>
             <div id="badoptions" class="sizeoptions">
             </div>
         </div>
@@ -330,11 +330,11 @@
                         </div>
                     </div>
                     <label id="bw-filter" class="checkbox path"><input type="checkbox" ><svg viewBox="0 0 21 21"><path d="M5,10.75 L8.5,14.25 L19.4,2.3 C18.8333333,1.43333333 18.0333333,1 17,1 L4,1 C2.35,1 1,2.35 1,4 L1,17 C1,18.65 2.35,20 4,20 L17,20 C18.65,20 20,18.65 20,17 L20,7.99769186"></path>
-								</svg><span>Filtro Blanco y Negro</span></label><br>
+								</svg><span data-text-key="imagen.controls.filter">Filtro Blanco y Negro</span></label><br>
                     <ol id="menu-picker-background">
                     </ol>
                 </div>
-                <a class="size-guide-text" href="#">Guía de tamaños</a>
+                <a class="size-guide-text" href="#" data-text-key="global.navigation.sizeGuide">Guía de tamaños</a>
                 <img class="size-guide-image" src="../images/guiadetamano.jpg" />
                 <ol class="picture-examples large-only">
                 </ol>
@@ -345,18 +345,18 @@
                     <a class="sizepicker-back" href="/mosaico/dimensiones.html">
                         <i class="fa fa-arrow-left" aria-hidden="true"></i> <span class="back-text">Cambia el tamaño</span>
                     </a>
-                    <p class="form-title morandi">Diseña tu mosaico:</p>
+                    <p class="form-title morandi" data-text-key="mosaico.header.title">Diseña tu mosaico:</p>
                     <div class="form-group cppp">
                         <span>Filas </span>
                         <input type="number" name="mosaicoAlto" min="1" max="5" step="1" /><span> x Columnas </span><input type="number" name="mosaicoAncho" min="1" max="5" step="1" />
                     </div>
-                    <p class="form-title">Marco estandar:</p>
-                    <p class="form-description">Te ofrecemos nuevas opciones:  Marcos en plástico o madera para mayor versatilidad.</p>
+                    <p class="form-title" data-text-key="global.frame.title">Marco estandar:</p>
+                    <p class="form-description" data-text-key="global.frame.description">Te ofrecemos nuevas opciones:  Marcos en plástico o madera para mayor versatilidad.</p>
                     <div class="form-group cppp">
                         <ol class="menu-picker" id="menu-picker-wood">
                         </ol>
                     </div>
-                    <p class="form-title">Ancho de frente:</p>
+                    <p class="form-title" data-text-key="global.frame.width.title">Ancho de frente:</p>
                     <div class="form-group cppp" id="widthOptions"></div>
                     <div class="out-of-stock-form-frame" style="display:none">
                         <p style="color:red">Stock Agotado. Introduzca su email y le avisaremos cuando este disponible</p>
@@ -368,8 +368,8 @@
                         </div>
                         <div class="mce_response"> </div>
                     </div>
-                    <p class="form-title">Agrega Paspartú:</p>
-                    <p class="form-description">Borde que se deja entre el marco y tu obra para resaltarla aún más.</p>
+                    <p class="form-title" data-text-key="global.paspartu.title">Agrega Paspartú:</p>
+                    <p class="form-description" data-text-key="global.paspartu.description">Borde que se deja entre el marco y tu obra para resaltarla aún más.</p>
                     <div class="form-group cppp">
                         <ol class="menu-picker" id="menu-picker-paspartu">
                         </ol>
@@ -391,8 +391,8 @@
                             </ol>
                         </div>
                     </div>
-                    <p class="form-title">Tipo de Acrílico:</p>
-                    <p class="form-description">En CLICK no usamos vidrio. Usamos acrílico 100% transparente que es más liviano y resistente.</p>
+                    <p class="form-title" data-text-key="global.acrilic.title">Tipo de Acrílico:</p>
+                    <p class="form-description" data-text-key="global.acrilic.description">En CLICK no usamos vidrio. Usamos acrílico 100% transparente que es más liviano y resistente.</p>
                     <div class="form-group cppp acrilic" id="acrilics"></div>
                     <div class="form-group cppp">
                         <ol class="picture-examples medium-only">
@@ -402,9 +402,9 @@
                         <label for="price">Precio de Photo Wall: <span id="slider-step-value"></span></label><span id="precio">0</span><span id="small-price-text">IVA Incluido</span>
                     </div>
 
-                    <button class="btn btn-filestack btn-block submit">Agregar al carrito</button>
+                    <button class="btn btn-filestack btn-block submit" data-text-key="global.cart.button">Agregar al carrito</button>
 
-                    <p>Selecciona el modo de entrega en el próximo paso</p>
+                    <p data-text-key="global.cart.delivery">Selecciona el modo de entrega en el próximo paso</p>
 
                     <p class="description-thingy">
                         <span class="full-desc">
