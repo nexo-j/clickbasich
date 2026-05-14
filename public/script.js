@@ -865,8 +865,11 @@ $(document).ready(function () {
   $(document).on('mouseenter', 'ol.menu-picker li', function () {
     if (window.matchMedia('(min-width: 768px)').matches && !supportsTouch) {
       var source = $(this).find('img').attr('src')
+      if (!source) return
+      var $input = $(this).children('input').first()
+      var nombre = $input.attr('nombre') || $input.attr('id') || ''
       $('#texture-floating img').attr('src', source)
-      $('#texture-floating .desc-texture').text($(this).children().first().attr('nombre'))
+      $('#texture-floating .desc-texture').text(nombre)
       $('#texture-floating').css('display', 'block')
     }
   })
