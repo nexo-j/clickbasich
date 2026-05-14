@@ -334,7 +334,7 @@ function frameItemHtml (frame, index) {
 
 function renderFrames (sortedFrames, frameCategories) {
   const activeCategories = Array.isArray(frameCategories)
-    ? frameCategories.filter(c => c.activo !== false)
+    ? frameCategories.filter(c => c.activo !== false && c.active !== false)
     : []
 
   // No active categories → flat list (comportamiento original)
@@ -342,7 +342,7 @@ function renderFrames (sortedFrames, frameCategories) {
     for (var i = 0; i < sortedFrames.length; i++) {
       $('#menu-picker-wood').append(frameItemHtml(sortedFrames[i], i))
     }
-    $('#menu-picker-wood').children().first().find('input').trigger('click')
+    $('#menu-picker-wood li').first().find('input').trigger('click')
     return
   }
 
@@ -360,26 +360,38 @@ function renderFrames (sortedFrames, frameCategories) {
   })
 
   var hasVisibleFrames = false
+  var html = ''
 
-  // Renderizar categorías activas que tengan al menos un frame
+  // Renderizar cada categoría activa con frames dentro de su propio div
   activeCategories.forEach(function (category) {
-    var slug = category.identificador
+    var slug = category.identificador || category.slug
+    var nombre = category.nombre || category.name || slug
+    var descripcion = category.descripcion || category.description || ''
     var indices = categoryMap[slug] || []
     if (indices.length === 0) return
     hasVisibleFrames = true
-    $('#menu-picker-wood').append('<li class="category-header">' + category.nombre + '</li>')
+    html += '<div class="category-group">'
+    html += '<p class="category-header">' + nombre + '</p>'
+    if (descripcion) {
+      html += '<p class="category-description">' + descripcion + '</p>'
+    }
+    html += '<ol class="menu-picker category-frames">'
     indices.forEach(function (i) {
-      $('#menu-picker-wood').append(frameItemHtml(sortedFrames[i], i))
+      html += frameItemHtml(sortedFrames[i], i)
     })
+    html += '</ol></div>'
   })
 
-  // Frames sin categorySlug → categoría fallback visible
+  // Frames sin categorySlug → categoría fallback al final
   if (uncategorizedIndices.length > 0) {
     hasVisibleFrames = true
-    $('#menu-picker-wood').append('<li class="category-header">Más opciones</li>')
+    html += '<div class="category-group">'
+    html += '<p class="category-header">Más opciones</p>'
+    html += '<ol class="menu-picker category-frames">'
     uncategorizedIndices.forEach(function (i) {
-      $('#menu-picker-wood').append(frameItemHtml(sortedFrames[i], i))
+      html += frameItemHtml(sortedFrames[i], i)
     })
+    html += '</ol></div>'
   }
 
   // Si ningún frame fue renderizado → lista plana como fallback final
@@ -388,11 +400,12 @@ function renderFrames (sortedFrames, frameCategories) {
     for (var j = 0; j < sortedFrames.length; j++) {
       $('#menu-picker-wood').append(frameItemHtml(sortedFrames[j], j))
     }
-    $('#menu-picker-wood').children().first().find('input').trigger('click')
+    $('#menu-picker-wood li').first().find('input').trigger('click')
     return
   }
 
-  $('#menu-picker-wood li:not(.category-header)').first().find('input').trigger('click')
+  $('#menu-picker-wood').html(html)
+  $('#menu-picker-wood li').first().find('input').trigger('click')
 }
 
 function checkInvetory () {

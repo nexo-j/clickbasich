@@ -6373,18 +6373,30 @@ ol.menu-picker li {
     display: inline-block;
 }
 
-ol.menu-picker li.category-header {
+.category-group {
+    margin-bottom: 20px;
+}
+
+.category-header {
     display: block;
     width: 100%;
     font-size: 11px;
-    font-weight: bold;
+    font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    color: #888;
-    margin-top: 8px;
+    color: #000000;
+    margin-top: 0;
     margin-bottom: 4px;
     cursor: default;
     pointer-events: none;
+}
+
+.category-description {
+    font-size: 11px;
+    color: #666;
+    margin-top: 0;
+    margin-bottom: 8px;
+    line-height: 1.4;
 }
 
 ol.menu-picker li label {
