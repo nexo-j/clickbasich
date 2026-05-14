@@ -6400,13 +6400,17 @@ ol.menu-picker li {
 
 .category-divider {
     border: none;
-    border-top: 1px solid #666;
-    width: 60%;
-    margin: 20px auto 24px auto;
+    border-top: 2px solid #666;
+    width: 80%;
+    margin: 20px 0 24px 0;
 }
 
 .category-width-section {
     margin-top: 12px;
+}
+
+.category-width-section .bordert + label {
+    margin-right: 16px;
 }
 
 ol.menu-picker li label {
