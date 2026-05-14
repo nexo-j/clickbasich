@@ -332,16 +332,23 @@ function frameItemHtml (frame, index) {
   return `<li><input data-images="${frame.gallery_images}" stock="true" type="radio" name="color-selection" id="${frame.name}" border_image=${frame.border_image} index=${index} example_image=${frame.example_image}><label for="${frame.name}"><img src="${frame.thumbnail}"><div class="checkthing"></div></label></li>`
 }
 
+function categoryWidthSection (slug) {
+  return '<div class="category-width-section"><p class="form-title">Ancho de frente:</p><div class="category-widthOptions" data-category-width="' + slug + '"></div></div>'
+}
+
 function renderFrames (sortedFrames, frameCategories) {
   const activeCategories = Array.isArray(frameCategories)
     ? frameCategories.filter(c => c.activo !== false && c.active !== false)
     : []
 
-  // No active categories → flat list (comportamiento original)
+  // No active categories → flat list con su propio widthOptions
   if (activeCategories.length === 0) {
+    var flatHtml = '<ol class="menu-picker category-frames">'
     for (var i = 0; i < sortedFrames.length; i++) {
-      $('#menu-picker-wood').append(frameItemHtml(sortedFrames[i], i))
+      flatHtml += frameItemHtml(sortedFrames[i], i)
     }
+    flatHtml += '</ol>' + categoryWidthSection('default')
+    $('#menu-picker-wood').html(flatHtml)
     $('#menu-picker-wood li').first().find('input').trigger('click')
     return
   }
@@ -362,44 +369,46 @@ function renderFrames (sortedFrames, frameCategories) {
   var hasVisibleFrames = false
   var html = ''
 
-  // Renderizar cada categoría activa con frames dentro de su propio div
+  // Renderizar cada categoría activa con su bloque de widthOptions
   activeCategories.forEach(function (category) {
     var slug = category.identificador || category.slug
     var nombre = category.nombre || category.name || slug
     var descripcion = category.descripcion || category.description || ''
     var indices = categoryMap[slug] || []
     if (indices.length === 0) return
+    if (hasVisibleFrames) html += '<hr class="category-divider">'
     hasVisibleFrames = true
     html += '<div class="category-group">'
     html += '<p class="category-header">' + nombre + '</p>'
-    if (descripcion) {
-      html += '<p class="category-description">' + descripcion + '</p>'
-    }
+    if (descripcion) html += '<p class="category-description">' + descripcion + '</p>'
     html += '<ol class="menu-picker category-frames">'
-    indices.forEach(function (i) {
-      html += frameItemHtml(sortedFrames[i], i)
-    })
-    html += '</ol></div>'
+    indices.forEach(function (i) { html += frameItemHtml(sortedFrames[i], i) })
+    html += '</ol>'
+    html += categoryWidthSection(slug)
+    html += '</div>'
   })
 
   // Frames sin categorySlug → categoría fallback al final
   if (uncategorizedIndices.length > 0) {
+    if (hasVisibleFrames) html += '<hr class="category-divider">'
     hasVisibleFrames = true
     html += '<div class="category-group">'
     html += '<p class="category-header">Más opciones</p>'
     html += '<ol class="menu-picker category-frames">'
-    uncategorizedIndices.forEach(function (i) {
-      html += frameItemHtml(sortedFrames[i], i)
-    })
-    html += '</ol></div>'
+    uncategorizedIndices.forEach(function (i) { html += frameItemHtml(sortedFrames[i], i) })
+    html += '</ol>'
+    html += categoryWidthSection('uncategorized')
+    html += '</div>'
   }
 
   // Si ningún frame fue renderizado → lista plana como fallback final
   if (!hasVisibleFrames) {
-    $('#menu-picker-wood').html('')
+    var fallbackHtml = '<ol class="menu-picker category-frames">'
     for (var j = 0; j < sortedFrames.length; j++) {
-      $('#menu-picker-wood').append(frameItemHtml(sortedFrames[j], j))
+      fallbackHtml += frameItemHtml(sortedFrames[j], j)
     }
+    fallbackHtml += '</ol>' + categoryWidthSection('default')
+    $('#menu-picker-wood').html(fallbackHtml)
     $('#menu-picker-wood li').first().find('input').trigger('click')
     return
   }
@@ -829,15 +838,18 @@ $(document).ready(function () {
     $('#acabado').text($(this).attr('id'))
     $('#frame-example-img').attr('src', $(this).attr('example_image'))
     $('.img-rounded').css('border-image-source', "url('" + $(this).attr('border_image') + "')")
-    // Add variants
-    const variants = frames[$(this).attr('index')].variants
+    // Add variants in the category-specific widthOptions container
+    const frame = frames[$(this).attr('index')]
+    const variants = frame.variants
+    const catSlug = frame.categorySlug || 'default'
+    const $widthContainer = $('.category-widthOptions[data-category-width="' + catSlug + '"]')
     variants.sort((a, b) => a.width - b.width)
-    $('#widthOptions').html('')
+    $widthContainer.html('')
     variants.forEach((variant, i) => {
-      $('#widthOptions').append(`<input type="radio" stock="${variant.stock}" class="bordert" data-code="${variant.code}" name="marco" value="${variant.width}" id="${variant.name}"><label for="${variant.name}">${variant.name}</label>`)
+      $widthContainer.append(`<input type="radio" stock="${variant.stock}" class="bordert" data-code="${variant.code}" name="marco" value="${variant.width}" id="${variant.name}"><label for="${variant.name}">${variant.name}</label>`)
     })
-    $('#widthOptions input:first').trigger('click')
-    $('#widthOptions input:first').attr('checked', true)
+    $widthContainer.find('input:first').trigger('click')
+    $widthContainer.find('input:first').attr('checked', true)
     // Update Gallery
     $('.picture-examples').html('')
     const galleryImages = $(this).attr('data-images').split(',')
@@ -850,7 +862,7 @@ $(document).ready(function () {
     $('#paspartuSlider').trigger('input')
   })
 
-  $('ol.menu-picker').on('mouseenter', 'li', function () {
+  $(document).on('mouseenter', 'ol.menu-picker li', function () {
     if (window.matchMedia('(min-width: 768px)').matches && !supportsTouch) {
       var source = $(this).find('img').attr('src')
       $('#texture-floating img').attr('src', source)
@@ -858,11 +870,11 @@ $(document).ready(function () {
       $('#texture-floating').css('display', 'block')
     }
   })
-  $('ol.menu-picker').on('mouseleave', 'li', function () {
+  $(document).on('mouseleave', 'ol.menu-picker li', function () {
     $('#texture-floating').css('display', 'none')
   })
 
-  $('ol.menu-picker').on('mousemove', function () {
+  $(document).on('mousemove', 'ol.menu-picker', function () {
     if (window.matchMedia('(min-width: 768px)').matches && !supportsTouch) {
       var height = $('#texture-floating').height()
       $('#texture-floating').css('left', Number(event.pageX + 5) + 'px')
@@ -921,7 +933,7 @@ $(document).ready(function () {
     }
   })
 
-  $('#widthOptions').on('click', 'input', function () {
+  $(document).on('click', '.category-widthOptions input', function () {
     if ($(this).attr('stock') === 'true') {
       $('.out-of-stock-form-frame').slideUp(400)
       $('.submit').show(400)

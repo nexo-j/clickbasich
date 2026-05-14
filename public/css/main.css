@@ -6374,18 +6374,18 @@ ol.menu-picker li {
 }
 
 .category-group {
-    margin-bottom: 20px;
+    margin-bottom: 24px;
 }
 
 .category-header {
     display: block;
     width: 100%;
-    font-size: 11px;
+    font-size: 17px;
     font-weight: 800;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.3px;
     color: #000000;
     margin-top: 0;
-    margin-bottom: 4px;
+    margin-bottom: 6px;
     cursor: default;
     pointer-events: none;
 }
@@ -6394,8 +6394,19 @@ ol.menu-picker li {
     font-size: 12px;
     color: #3d3939;
     margin-top: 0;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     line-height: 1.4;
+}
+
+.category-divider {
+    border: none;
+    border-top: 1px solid #666;
+    width: 60%;
+    margin: 20px auto 24px auto;
+}
+
+.category-width-section {
+    margin-top: 12px;
 }
 
 ol.menu-picker li label {
