@@ -5889,7 +5889,7 @@ h3 {
 .morandi {
     font-family: Morandi;
     font-weight: normal !important;
-    font-size: 22px;
+    font-size: 30px;
     text-transform: none !important;
 }
 
@@ -6382,7 +6382,6 @@ ol.menu-picker li {
     width: 100%;
     font-size: 11px;
     font-weight: 800;
-    text-transform: uppercase;
     letter-spacing: 0.5px;
     color: #000000;
     margin-top: 0;
@@ -6392,8 +6391,8 @@ ol.menu-picker li {
 }
 
 .category-description {
-    font-size: 11px;
-    color: #666;
+    font-size: 12px;
+    color: #3d3939;
     margin-top: 0;
     margin-bottom: 8px;
     line-height: 1.4;
