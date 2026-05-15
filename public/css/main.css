@@ -6476,6 +6476,10 @@ ol.menu-picker li:hover .label-hover {
     opacity: 0.85;
 }
 
+.img-blend-bg {
+    mix-blend-mode: multiply;
+}
+
 ol.menu-picker li input:checked+label {
     /*background: linear-gradient(90deg, #ee2a59, #ffc220);*/
     /*background:;*/
