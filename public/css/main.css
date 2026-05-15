@@ -6464,7 +6464,16 @@ ol.menu-picker li:hover .label-hover {
 }
 
 .home-menu>.grid__item>a>img {
-    height: 25vh;
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 4px;
+    transition: opacity 0.15s ease;
+}
+
+.home-menu>.grid__item>a:active>img,
+.home-menu>.grid__item>a:hover>img {
+    opacity: 0.85;
 }
 
 ol.menu-picker li input:checked+label {
@@ -6785,7 +6794,7 @@ button.submit {
 }
 
 div.hero-thing {
-    padding: 30px;
+    padding: 15px;
     text-align: center;
 }
 
@@ -6799,9 +6808,11 @@ div.hero-thing a.btn {
 }
 
 div.hero-thing img {
-    max-width: 300px;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
     display: block;
-    margin: 0 auto 20px;
+    margin: 0 auto 16px;
 }
 
 .semi-title {
