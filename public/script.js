@@ -337,6 +337,7 @@ function categoryWidthSection (slug) {
 }
 
 function renderFrames (sortedFrames, frameCategories) {
+  var useAccordion = !!window.useFrameAccordion
   const activeCategories = Array.isArray(frameCategories)
     ? frameCategories.filter(c => c.activo !== false && c.active !== false)
     : []
@@ -367,38 +368,78 @@ function renderFrames (sortedFrames, frameCategories) {
   })
 
   var hasVisibleFrames = false
+  var isFirstCategory = true
   var html = ''
 
-  // Renderizar cada categoría activa con su bloque de widthOptions
   activeCategories.forEach(function (category) {
     var slug = category.identificador || category.slug
     var nombre = category.nombre || category.name || slug
     var descripcion = category.descripcion || category.description || ''
     var indices = categoryMap[slug] || []
     if (indices.length === 0) return
-    if (hasVisibleFrames) html += '<hr class="category-divider">'
+
     hasVisibleFrames = true
-    html += '<div class="category-group">'
-    html += '<p class="category-header">' + nombre + '</p>'
-    if (descripcion) html += '<p class="category-description">' + descripcion + '</p>'
-    html += '<ol class="menu-picker category-frames">'
-    indices.forEach(function (i) { html += frameItemHtml(sortedFrames[i], i) })
-    html += '</ol>'
-    html += categoryWidthSection(slug)
-    html += '</div>'
+
+    if (useAccordion) {
+      var openClass = isFirstCategory ? 'open' : 'closed'
+      html += '<div class="frame-accordion-item ' + openClass + '">'
+      html += '<div class="frame-accordion-header">'
+      html += '<div class="accordion-title-group">'
+      html += '<p class="category-header">' + nombre + '</p>'
+      if (descripcion) html += '<p class="category-description">' + descripcion + '</p>'
+      html += '</div>'
+      html += '<span class="accordion-chevron"></span>'
+      html += '</div>'
+      html += '<div class="frame-accordion-body">'
+      html += '<ol class="menu-picker category-frames">'
+      indices.forEach(function (i) { html += frameItemHtml(sortedFrames[i], i) })
+      html += '</ol>'
+      html += categoryWidthSection(slug)
+      html += '</div>'
+      html += '</div>'
+      isFirstCategory = false
+    } else {
+      if (!isFirstCategory) html += '<hr class="category-divider">'
+      html += '<div class="category-group">'
+      html += '<p class="category-header">' + nombre + '</p>'
+      if (descripcion) html += '<p class="category-description">' + descripcion + '</p>'
+      html += '<ol class="menu-picker category-frames">'
+      indices.forEach(function (i) { html += frameItemHtml(sortedFrames[i], i) })
+      html += '</ol>'
+      html += categoryWidthSection(slug)
+      html += '</div>'
+      isFirstCategory = false
+    }
   })
 
   // Frames sin categorySlug → categoría fallback al final
   if (uncategorizedIndices.length > 0) {
-    if (hasVisibleFrames) html += '<hr class="category-divider">'
     hasVisibleFrames = true
-    html += '<div class="category-group">'
-    html += '<p class="category-header">Más opciones</p>'
-    html += '<ol class="menu-picker category-frames">'
-    uncategorizedIndices.forEach(function (i) { html += frameItemHtml(sortedFrames[i], i) })
-    html += '</ol>'
-    html += categoryWidthSection('uncategorized')
-    html += '</div>'
+    if (useAccordion) {
+      html += '<div class="frame-accordion-item closed">'
+      html += '<div class="frame-accordion-header">'
+      html += '<div class="accordion-title-group">'
+      html += '<p class="category-header">Más opciones</p>'
+      html += '</div>'
+      html += '<span class="accordion-chevron"></span>'
+      html += '</div>'
+      html += '<div class="frame-accordion-body">'
+      html += '<ol class="menu-picker category-frames">'
+      uncategorizedIndices.forEach(function (i) { html += frameItemHtml(sortedFrames[i], i) })
+      html += '</ol>'
+      html += categoryWidthSection('uncategorized')
+      html += '</div>'
+      html += '</div>'
+    } else {
+      if (!isFirstCategory) html += '<hr class="category-divider">'
+      html += '<div class="category-group">'
+      html += '<p class="category-header">Más opciones</p>'
+      html += '<ol class="menu-picker category-frames">'
+      uncategorizedIndices.forEach(function (i) { html += frameItemHtml(sortedFrames[i], i) })
+      html += '</ol>'
+      html += categoryWidthSection('uncategorized')
+      html += '</div>'
+    }
   }
 
   // Si ningún frame fue renderizado → lista plana como fallback final
@@ -882,6 +923,15 @@ $(document).ready(function () {
       var height = $('#texture-floating').height()
       $('#texture-floating').css('left', Number(event.pageX + 5) + 'px')
       $('#texture-floating').css('top', Number(event.pageY - height - 5) + 'px')
+    }
+  })
+
+  $(document).on('click', '.frame-accordion-header', function () {
+    var $item = $(this).closest('.frame-accordion-item')
+    if ($item.hasClass('open')) {
+      $item.removeClass('open').addClass('closed')
+    } else {
+      $item.removeClass('closed').addClass('open')
     }
   })
 
