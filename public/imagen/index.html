@@ -52,7 +52,7 @@
         font-family: 'Bricolage Grotesque', 'Raleway', Arial, sans-serif;
       }
       .sim-page-title {
-        font-size: 1.9rem;
+        font-size: 1.6rem;
         font-weight: 600;
         text-align: left;
         margin: 16px 0 4px 30px;
@@ -167,17 +167,18 @@
         margin-bottom: 4px;
       }
 
-      /* ── Cart button — full panel width ── */
+      /* ── Cart button — full panel width, left-aligned text ── */
       .btn.btn-block.submit {
         background-color: #000 !important;
         color: #fff !important;
         border: none !important;
         border-radius: 0 !important;
-        padding: 15px !important;
+        padding: 15px 20px !important;
         font-size: 0.85rem;
         font-weight: 600;
         letter-spacing: 2px;
         text-transform: uppercase;
+        text-align: left !important;
         margin-top: 10px;
         margin-left: -20px !important;
         width: calc(100% + 20px) !important;
@@ -186,6 +187,14 @@
       }
       .btn.btn-block.submit:hover {
         background-color: #222 !important;
+      }
+
+      /* ── Post-cart summary area ── */
+      .post-cart-summary {
+        background-color: rgb(242, 242, 242);
+        margin-left: -20px;
+        width: calc(100% + 20px);
+        padding: 14px 20px 16px 20px;
       }
 
       /* ── Gallery carousel ── */
@@ -456,22 +465,22 @@
 
                     <button class="btn btn-filestack btn-block submit" data-text-key="global.cart.button">Agregar al carrito</button>
 
-                    <p data-text-key="global.cart.delivery">Selecciona el modo de entrega en el próximo paso</p>
+                    <div class="post-cart-summary">
+                        <p data-text-key="global.cart.delivery">Selecciona el modo de entrega en el próximo paso</p>
 
-                    <p class="description-thingy">
-                        <span class="full-desc">
-									<b>Medidas de tu imagen:</b>
-									Alto: <span id="alto">13</span>cm - Largo: <span id="ancho">13</span>cm<br/><span class="invsbl"> -</span>
-                        <b>Medidas totales del marco:</b> Alto: <span id="altot"></span>cm - Largo: <span id="anchot"></span>cm<br/><span class="invsbl"> -</span>
-                        <b>Marco: </b><span id="acabado"></span> <span id="marco"></span>cm<br/><span class="invsbl"> -</span>
-                        <b>Paspartú: </b><span id="paspartuc"></span> <span id="borde"></span>cm<br/><span class="invsbl"> -</span>
-                        <b>Frente: </b><span id="frente"></span><br/><span class="invsbl"> -</span>
-                        <b>Impresion: </b><span id="impresion">Color</span><br/><span class="invsbl"> -</span>
-                        <span id="desc-gallery"></span><br/><span class="invsbl"> -</span>
-                        </span>
-                    </p>
-
-                    <div></div>
+                        <p class="description-thingy">
+                            <span class="full-desc">
+                                <b>Medidas de tu imagen:</b>
+                                Alto: <span id="alto">13</span>cm - Largo: <span id="ancho">13</span>cm<br/><span class="invsbl"> -</span>
+                                <b>Medidas totales del marco:</b> Alto: <span id="altot"></span>cm - Largo: <span id="anchot"></span>cm<br/><span class="invsbl"> -</span>
+                                <b>Marco: </b><span id="acabado"></span> <span id="marco"></span>cm<br/><span class="invsbl"> -</span>
+                                <b>Paspartú: </b><span id="paspartuc"></span> <span id="borde"></span>cm<br/><span class="invsbl"> -</span>
+                                <b>Frente: </b><span id="frente"></span><br/><span class="invsbl"> -</span>
+                                <b>Impresion: </b><span id="impresion">Color</span><br/><span class="invsbl"> -</span>
+                                <span id="desc-gallery"></span><br/><span class="invsbl"> -</span>
+                            </span>
+                        </p>
+                    </div>
                 </form>
             </div>
         </div>
