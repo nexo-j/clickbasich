@@ -73,12 +73,12 @@
         color: #3d3939;
       }
 
-      /* Section thin dividers */
+      /* Section thin dividers — touch vertical separator on the left */
       .section-divider {
         border: none;
         border-top: 1px solid #000000;
-        width: 100%;
-        margin: 18px 0;
+        margin: 18px 0 18px -20px;
+        width: calc(100% + 20px);
       }
       /* Ocultar category-divider dentro del picker de imagen */
       #menu-picker-wood .category-divider {
@@ -88,9 +88,12 @@
       /* ── Accordion ── */
       .frame-accordion-item {
         border-bottom: 1px solid #000000;
+        /* extend left to touch vertical separator */
+        margin-left: -20px;
+        padding-left: 20px;
       }
       .frame-accordion-item:first-child {
-        border-top: 1px solid #000000;
+        border-top: none; /* no line above first category */
       }
       .frame-accordion-header {
         display: flex;
@@ -164,17 +167,20 @@
         margin-bottom: 4px;
       }
 
-      /* ── Cart button ── */
+      /* ── Cart button — full panel width ── */
       .btn.btn-block.submit {
         background-color: #000 !important;
         color: #fff !important;
         border: none !important;
+        border-radius: 0 !important;
         padding: 15px !important;
         font-size: 0.85rem;
         font-weight: 600;
         letter-spacing: 2px;
         text-transform: uppercase;
         margin-top: 10px;
+        margin-left: -20px !important;
+        width: calc(100% + 20px) !important;
         cursor: pointer;
         font-family: 'Bricolage Grotesque', Arial, sans-serif;
       }
