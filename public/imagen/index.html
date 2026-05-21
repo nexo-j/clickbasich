@@ -212,6 +212,22 @@
         overflow-y: auto;
         max-height: calc(100vh - 80px);
       }
+
+      /* ── Sector dividers: outer frame + vertical column separator ── */
+      .panel.panel-default {
+        border: 1px solid #000000;
+        overflow: hidden;
+      }
+      div.thumbnail {
+        border-right: 1px solid #000000 !important;
+        padding-right: 20px;
+      }
+      div.panel-body {
+        padding-left: 20px;
+        padding-top: 12px;
+        border-left: none; /* separator comes from thumbnail border-right */
+      }
+
       @media screen and (max-width: 768px) {
         .panel-body {
           max-height: none;
@@ -219,6 +235,21 @@
         }
         .sim-page-title {
           font-size: 1.4rem;
+        }
+        /* On mobile columns stack: replace vertical separator with horizontal */
+        .panel.panel-default {
+          border: none;
+          border-top: 1px solid #000000;
+        }
+        div.thumbnail {
+          border-right: none !important;
+          border-bottom: 1px solid #000000;
+          padding-right: 0;
+        }
+        div.panel-body {
+          padding-left: 10px;
+          padding-right: 10px;
+          border-top: none;
         }
       }
     </style>
