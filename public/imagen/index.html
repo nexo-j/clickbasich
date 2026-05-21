@@ -189,24 +189,63 @@
       }
 
       /* ── Gallery carousel ── */
+      .carousel-wrap {
+        position: relative;
+        width: 100%;
+        margin-top: 14px;
+      }
+      .carousel-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 10;
+        background: rgba(255,255,255,0.90);
+        border: 1px solid #000;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 14px;
+        line-height: 1;
+        padding: 0;
+        transition: background 0.15s ease, color 0.15s ease;
+      }
+      .carousel-btn:hover { background: #000; color: #fff; }
+      .carousel-prev { left: 0; }
+      .carousel-next { right: 0; }
+      .carousel-btn.hidden { opacity: 0; pointer-events: none; }
+
       ol.picture-examples {
         display: flex !important;
         flex-direction: row !important;
-        overflow-x: auto !important;
-        gap: 8px;
-        padding: 8px 0 12px 0;
+        /* programmatic scroll — scrollbar hidden */
+        overflow-x: auto;
+        scroll-behavior: smooth;
         -webkit-overflow-scrolling: touch;
-        scrollbar-width: thin;
+        scrollbar-width: none;        /* Firefox */
+        -ms-overflow-style: none;     /* IE/Edge */
+        gap: 4px;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        width: 100%;
       }
+      ol.picture-examples::-webkit-scrollbar { display: none; }
+
+      /* 3 images fill 100%; extras scroll to the right */
       ol.picture-examples li {
-        flex-shrink: 0;
-        display: inline-flex !important;
+        flex: 0 0 calc((100% - 8px) / 3); /* (100% - 2 gaps of 4px) / 3 */
+        display: block !important;
         padding: 0 !important;
         cursor: pointer;
+        overflow: hidden;
       }
       ol.picture-examples li img {
-        height: 90px !important;
-        width: auto;
+        width: 100% !important;
+        height: 110px !important;
+        object-fit: cover;
         display: block;
         border-radius: 2px;
         transition: opacity 0.15s ease;
@@ -336,8 +375,12 @@
                 <a class="size-guide-text" href="#" data-text-key="global.navigation.sizeGuide">Guía de tamaños</a>
 
                 <img class="size-guide-image" src="../images/guiadetamano.jpg" />
-                <ol class="picture-examples large-only">
-                </ol>
+                <div class="carousel-wrap">
+                    <button class="carousel-btn carousel-prev hidden" aria-label="Anterior">&#8592;</button>
+                    <ol class="picture-examples large-only">
+                    </ol>
+                    <button class="carousel-btn carousel-next hidden" aria-label="Siguiente">&#8594;</button>
+                </div>
             </div>
             <div class="panel-body">
                 <!-- <p>¡Enmarca tu foto!</p> -->
@@ -440,6 +483,58 @@
     <script src="../js/utilities.js"></script>
     <script>window.useFrameAccordion = true</script>
     <script src="../script.js"></script>
+    <script>
+    (function () {
+      function initCarousel() {
+        var ol = document.querySelector('ol.picture-examples.large-only');
+        if (!ol) return;
+        var wrap = ol.parentElement;
+        if (!wrap || !wrap.classList.contains('carousel-wrap')) return;
+        if (wrap._carouselReady) return; // prevent double-init
+        wrap._carouselReady = true;
+
+        var btnPrev = wrap.querySelector('.carousel-prev');
+        var btnNext = wrap.querySelector('.carousel-next');
+
+        function getSlideWidth() {
+          var li = ol.querySelector('li');
+          if (!li) return ol.offsetWidth / 3;
+          var gap = parseFloat(window.getComputedStyle(ol).gap) || 4;
+          return li.offsetWidth + gap;
+        }
+
+        function updateButtons() {
+          var atStart = ol.scrollLeft <= 2;
+          var atEnd = ol.scrollLeft >= ol.scrollWidth - ol.offsetWidth - 2;
+          btnPrev.classList.toggle('hidden', atStart);
+          btnNext.classList.toggle('hidden', atEnd || ol.scrollWidth <= ol.offsetWidth + 2);
+        }
+
+        btnPrev.addEventListener('click', function () {
+          ol.scrollBy({ left: -getSlideWidth(), behavior: 'smooth' });
+        });
+        btnNext.addEventListener('click', function () {
+          ol.scrollBy({ left: getSlideWidth(), behavior: 'smooth' });
+        });
+        ol.addEventListener('scroll', updateButtons);
+
+        // Re-evaluate buttons whenever script.js populates the gallery
+        var observer = new MutationObserver(function () {
+          setTimeout(updateButtons, 120);
+        });
+        observer.observe(ol, { childList: true });
+
+        updateButtons();
+      }
+
+      // Run after DOM + script.js
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function () { setTimeout(initCarousel, 200); });
+      } else {
+        setTimeout(initCarousel, 200);
+      }
+    })();
+    </script>
     <div id="texture-floating"><img src=""><span class="desc-texture"></span></div>
 </body>
 
