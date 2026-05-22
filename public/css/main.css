@@ -6348,7 +6348,7 @@ a.filepicker:hover {
 }
 
 .form-group {
-    margin-top: 30px;
+    margin-top: 0;
     margin-bottom: 30px;
     width: 100%;
 }
@@ -7105,10 +7105,10 @@ span.input-separator {
 
 .size-guide-text {
     position: relative;
-    display: inline-block;
+    display: none;
     width: fit-content;
     margin: 0 auto;
-    padding: 15px;
+    padding: 5px;
 }
 
 .size-guide-text:hover {
@@ -7156,12 +7156,10 @@ span.input-separator {
     right: 0;
     top: 50%;
     transform: translateY(-50%);
-    background-color: #eee;
     color: #444;
     max-width: 90vh;
     padding: 30px;
     border-radius: 8px;
-    box-shadow: 0 2px 14px 0 rgba(0, 0, 0, .5), 0 2px 4px 0 rgba(0, 0, 0, .5);
 }
 
 .veil-modal h2,
