@@ -6052,7 +6052,7 @@ a.filepicker:hover {
     display: none;
 }
 
-/* Paspartú slider v2 — referencia UI naranja #f36943, puntos blancos */
+/* Paspartú slider v2 — barra naranja #f36943 */
 .paspartu-slider-v2.slider-container,
 .paspartu-slider-v2 .slider-container,
 .slider-container.paspartu-slider-v2 {
@@ -6060,29 +6060,9 @@ a.filepicker:hover {
     width: 100%;
     max-width: 300px;
     position: relative;
-    padding: 44px 15px 4px;
+    padding: 8px 15px 4px;
     opacity: 1;
     box-sizing: border-box;
-}
-
-.paspartu-slider-v2 .paspartu-slider-badge {
-    position: absolute;
-    top: 0;
-    left: var(--slider-pct, 0%);
-    transform: translateX(-50%);
-    min-width: 36px;
-    height: 36px;
-    padding: 0 6px;
-    border-radius: 50%;
-    background: #2a2a2a;
-    color: #ffffff;
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 36px;
-    text-align: center;
-    pointer-events: none;
-    z-index: 4;
-    font-family: 'Bricolage Grotesque', 'Lato', sans-serif;
 }
 
 .paspartu-slider-v2 .slider {
@@ -6151,19 +6131,14 @@ a.filepicker:hover {
 }
 
 .paspartu-slider-v2 .slider-labels {
-    position: absolute;
-    top: 50px;
-    left: 15px;
-    right: 15px;
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    width: auto;
-    margin: 0;
+    width: calc(100% - 30px);
+    margin: 10px auto 0;
     padding: 0;
     list-style: none;
-    pointer-events: none;
-    z-index: 1;
 }
 
 .paspartu-slider-v2 .slider-labels li {
@@ -6172,30 +6147,17 @@ a.filepicker:hover {
     color: #666;
     font-size: 13px;
     line-height: 1.2;
-    padding-top: 20px;
+    padding-top: 0;
     cursor: pointer;
     position: relative;
-    pointer-events: auto;
 }
 
 .paspartu-slider-v2 .slider-labels li::before {
-    position: absolute;
-    top: 3px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 8px;
-    height: 8px;
-    margin: 0;
-    background: #ffffff;
-    border-radius: 50%;
-    box-shadow: 0 0 0 1px rgba(243, 105, 67, 0.4);
-    content: "";
-    z-index: 2;
+    display: none;
 }
 
 .paspartu-slider-v2 .slider-labels li.selected::before {
-    display: block;
-    background: #ffffff;
+    display: none;
 }
 
 .checkbox {

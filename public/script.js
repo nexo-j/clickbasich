@@ -275,9 +275,6 @@ function syncPaspartuSliderUi () {
   var val = Number($slider.val())
   var pct = max > min ? ((val - min) / (max - min)) * 100 : 0
   $slider[0].style.setProperty('--slider-pct', pct + '%')
-  var $selected = $('#paspartuWidths').children().eq(val)
-  var cm = $selected.attr('value') || '0'
-  $('#paspartuSliderBadge').text(cm)
 }
 
 $('#paspartuSlider').on('input', () => {
