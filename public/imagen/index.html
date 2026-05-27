@@ -125,10 +125,10 @@
       }
       .accordion-chevron::before { content: '⌄'; }
       .frame-accordion-item.open .accordion-chevron {
-        transform: rotate(0deg);
+        transform: rotate(-90deg);
       }
       .frame-accordion-item.closed .accordion-chevron {
-        transform: rotate(-90deg);
+        transform: rotate(0deg);
       }
       .frame-accordion-body {
         overflow: hidden;
@@ -352,7 +352,7 @@
         <a href="//clickmarqueteria.com"><img src="../images/Click_Logo.png"></a>
         <a href="//clickmarqueteria.com" class="back">Regresa a la tienda<span class="x">✕</span></a></header>
     <div class="container">
-        <p class="sim-page-title form-title morandi" data-text-key="imagen.header.title">Diseña tu cuadro</p>
+        <p class="sim-page-title form-title" data-text-key="imagen.header.title">Diseña tu cuadro</p>
         <div class="panel panel-default">
             <div class="thumbnail off">
                 <div class="background-container">
@@ -427,8 +427,9 @@
                         <div class="mce_response"> </div>
                     </div>
                     <div class="form-group cppp">
-                        <div class="slider-container">
-                            <input type="range" min="0" max="7" value="2" step=1 class="slider" id="paspartuSlider" />
+                        <div class="slider-container paspartu-slider-v2">
+                            <span class="paspartu-slider-badge" id="paspartuSliderBadge" aria-hidden="true">0</span>
+                            <input type="range" min="0" max="7" value="2" step="1" class="slider" id="paspartuSlider" />
                             <ol class="slider-labels" id="paspartuWidths">
                             </ol>
                         </div>

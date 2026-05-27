@@ -267,6 +267,19 @@ function setFullHeightInDescription () {
   $('#anchot').text(Number(anchoTotal).toFixed(2))
 }
 
+function syncPaspartuSliderUi () {
+  var $slider = $('#paspartuSlider')
+  if (!$slider.length) return
+  var min = Number($slider.attr('min')) || 0
+  var max = Number($slider.attr('max')) || 0
+  var val = Number($slider.val())
+  var pct = max > min ? ((val - min) / (max - min)) * 100 : 0
+  $slider[0].style.setProperty('--slider-pct', pct + '%')
+  var $selected = $('#paspartuWidths').children().eq(val)
+  var cm = $selected.attr('value') || '0'
+  $('#paspartuSliderBadge').text(cm)
+}
+
 $('#paspartuSlider').on('input', () => {
   $('#paspartuWidths').children().each((i, child) => {
     if (i === Number($('#paspartuSlider').val())) {
@@ -276,6 +289,7 @@ $('#paspartuSlider').on('input', () => {
       $(child).removeClass('selected')
     }
   })
+  syncPaspartuSliderUi()
   actualizarDimensiones()
   updatePrice()
 })
