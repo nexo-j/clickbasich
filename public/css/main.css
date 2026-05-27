@@ -6060,7 +6060,7 @@ a.filepicker:hover {
     width: 100%;
     max-width: 300px;
     position: relative;
-    padding: 8px 15px 4px;
+    padding: 15px 0 4px;
     opacity: 1;
     box-sizing: border-box;
 }
