@@ -6903,7 +6903,7 @@ button.submit {
     display: block;
     z-index: 999;
     width: 280px;
-    margin-bottom: 15px;
+    margin-bottom: 0;
 }
 
 .progress-bar-text {

@@ -270,15 +270,27 @@
       .panel.panel-default {
         border: 1px solid #000000;
         overflow: hidden;
+        display: flex;
+        align-items: stretch;
       }
       div.thumbnail {
+        float: none !important;
+        flex: 0 0 55%;
+        width: 55%;
+        min-height: 100%;
+        align-self: stretch;
         border-right: 1px solid #000000 !important;
         padding-right: 0;
+        box-sizing: border-box;
       }
       div.panel-body {
+        float: none !important;
+        flex: 1 1 45%;
+        width: 45%;
         padding-left: 20px;
         padding-top: 12px;
         border-left: none; /* separator comes from thumbnail border-right */
+        box-sizing: border-box;
       }
 
       @media screen and (max-width: 768px) {
@@ -293,13 +305,21 @@
         .panel.panel-default {
           border: none;
           border-top: 1px solid #000000;
+          display: block;
         }
         div.thumbnail {
+          float: none !important;
+          flex: none;
+          width: 100%;
+          min-height: 0;
           border-right: none !important;
           border-bottom: 1px solid #000000;
           padding-right: 0;
         }
         div.panel-body {
+          float: none !important;
+          flex: none;
+          width: 100%;
           padding-left: 10px;
           padding-right: 10px;
           border-top: none;
