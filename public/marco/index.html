@@ -62,7 +62,7 @@
     <meta property="twitter:image" content="https://marcos.clickmarqueteria.com/images/animation.gif">
 </head>
 
-<body class="marcom">
+<body class="marcom sim-ui-v2">
 
     <div class="veil" id="picture-examples-veil">
         <div class="veil-modal">
@@ -75,6 +75,7 @@
         <a href="//clickmarqueteria.com"><img src="../images/Click_Logo.png"></a>
         <a href="//clickmarqueteria.com" class="back">Regresa a la tienda<span class="x">✕</span></a></header>
     <div class="container">
+        <p class="sim-page-title form-title" data-text-key="marco.header.title">Diseña tu cuadro</p>
         <div class="panel panel-default">
             <div class="thumbnail off">
                 <div class="background-container">
@@ -94,8 +95,12 @@
                 </div>
                 <a class="size-guide-text" href="#" data-text-key="global.navigation.sizeGuide">Guía de tamaños</a>
                 <img class="size-guide-image" src="../images/guiadetamano.jpg" />
-                <ol class="picture-examples large-only">
-                </ol>
+                <div class="carousel-wrap">
+                    <button class="carousel-btn carousel-prev hidden" aria-label="Anterior">&#8592;</button>
+                    <ol class="picture-examples large-only">
+                    </ol>
+                    <button class="carousel-btn carousel-next hidden" aria-label="Siguiente">&#8594;</button>
+                </div>
             </div>
             <div class="panel-body">
                 <!-- <p>¡Enmarca tu foto!</p> -->
@@ -103,7 +108,6 @@
                     <a class="sizepicker-back" href="/dimensiones/">
                         <i class="fa fa-arrow-left" aria-hidden="true"></i> <span class="back-text form-description" data-text-key="global.navigation.changeSize">Cambia el tamaño</span>
                     </a>
-                    <p class="form-title morandi" data-text-key="marco.header.title">Diseña tu cuadro</p>
                     <p class="form-title" data-text-key="global.frame.title" style="display:none">Marco estandar:</p>
                     <p class="form-description" data-text-key="global.frame.description" style="display:none">Te ofrecemos nuevas opciones:  Marcos en plástico o madera para mayor versatilidad.</p>
                     <div class="form-group cppp">
@@ -123,7 +127,6 @@
                         </div>
                         <div class="mce_response"> </div>
                     </div>
-                    <hr class="category-divider">
                     <p class="form-title" data-text-key="global.paspartu.title">Agrega Paspartú:</p>
                     <p class="form-description" data-text-key="global.paspartu.description">Borde que se deja entre el marco y tu obra para resaltarla aún más.</p>
                     <div class="form-group cppp">
@@ -147,11 +150,12 @@
                             </ol>
                         </div>
                     </div>
+                    <hr class="section-divider">
                     <p class="form-title" data-text-key="global.acrilic.title">Tipo de Acrílico:</p>
                     <p class="form-description" data-text-key="global.acrilic.description">En CLICK no usamos vidrio. Usamos acrílico 100% transparente que es más liviano y resistente.</p>
                     <div class="form-group cppp acrilic" id="acrilics">
                     </div>
-                    <div class="form-group cppp">
+                    <div class="form-group cppp" style="display:none">
                         <ol class="picture-examples medium-only">
                         </ol>
                     </div>
@@ -170,22 +174,26 @@
                         </div>
                     </div>
 
+                    <hr class="section-divider">
                     <div class="form-group cppp precioline">
                         <span id="precio">0</span><span id="small-price-text">IVA Incluido</span>
                     </div>
 
                     <button class="btn btn-filestack btn-block submit" data-text-key="global.cart.button">Agregar al carrito</button>
-                    <p data-text-key="global.cart.delivery">Selecciona el modo de entrega en el próximo paso</p>
-                    <p class="description-thingy">
-                        <span class="full-desc">
-									<b>Medidas de tu imagen:</b><br/>
-									Alto: <span id="alto"></span>cm - Largo: <span id="ancho"></span>cm<br/><span class="invsbl"> -</span>
-                        <b>Medidas totales del marco:</b><br /> Alto: <span id="altot"></span>cm - Largo: <span id="anchot"></span>cm<br/><span class="invsbl"> -</span>
-                        <b>Marco: </b><span id="acabado">Resina Negro</span> <span id="marco">2</span>cm <br/><span class="invsbl"> -</span>
-                        <b>Paspartú: </b><span id="paspartuc">Blanco</span> <span id="borde">7</span>cm<br/><span class="invsbl"> -</span>
-                        <b>Frente: </b><span id="frente"></span><br/><span class="invsbl"> -</span>
-                        </span>
-                    </p>
+
+                    <div class="post-cart-summary">
+                        <p data-text-key="global.cart.delivery">Selecciona el modo de entrega en el próximo paso</p>
+                        <p class="description-thingy">
+                            <span class="full-desc">
+                                <b>Medidas de tu imagen:</b><br/>
+                                Alto: <span id="alto"></span>cm - Largo: <span id="ancho"></span>cm<br/><span class="invsbl"> -</span>
+                                <b>Medidas totales del marco:</b><br /> Alto: <span id="altot"></span>cm - Largo: <span id="anchot"></span>cm<br/><span class="invsbl"> -</span>
+                                <b>Marco: </b><span id="acabado">Resina Negro</span> <span id="marco">2</span>cm <br/><span class="invsbl"> -</span>
+                                <b>Paspartú: </b><span id="paspartuc">Blanco</span> <span id="borde">7</span>cm<br/><span class="invsbl"> -</span>
+                                <b>Frente: </b><span id="frente"></span><br/><span class="invsbl"> -</span>
+                            </span>
+                        </p>
+                    </div>
                     <div></div>
                 </form>
             </div>
@@ -195,6 +203,7 @@
     <script src="//code.jquery.com/jquery-3.0.0.min.js"></script>
     <script src="../js/utilities.js" crossorigin="anonymous"></script>
     <script src="https://static.filestackapi.com/filestack-js/3.x.x/filestack.min.js"></script>
+    <script>window.useFrameAccordion = true</script>
     <script src="../script.js" crossorigin="anonymous"></script>
     <div id="texture-floating"><img src=""><span class="desc-texture"></span></div>
 </body>

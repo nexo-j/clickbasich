@@ -6613,9 +6613,11 @@ ol.menu-picker li:hover .label-hover {
 }
 
 .home-menu>.grid__item>a>img {
-    width: 100%;
+    width: 65%;
     height: auto;
     display: block;
+    margin-left: auto;
+    margin-right: auto;
     border-radius: 4px;
     transition: opacity 0.15s ease;
 }
@@ -7273,6 +7275,7 @@ span.input-separator {
     right: 0;
     top: 50%;
     transform: translateY(-50%);
+    background-color: #ffffff;
     color: #444;
     max-width: 90vh;
     padding: 30px;
@@ -7491,5 +7494,327 @@ h4#recommended {
     .category-divider {
         margin-left: auto;
         margin-right: auto;
+    }
+}
+
+/* ── Simulator UI v2 (imagen, marco, mosaico) ── */
+body.sim-ui-v2 .panel-body,
+body.sim-ui-v2 .panel-body form,
+body.sim-ui-v2 .sim-page-title {
+    font-family: 'Bricolage Grotesque', 'Raleway', Arial, sans-serif;
+}
+
+body.sim-ui-v2 .sim-page-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    text-align: left;
+    margin: 16px 0 4px 30px;
+    padding: 0;
+    line-height: 1.1;
+    font-family: 'Bricolage Grotesque', Arial, sans-serif;
+}
+
+body.sim-ui-v2 .panel-body .form-title {
+    font-family: 'Bricolage Grotesque', Arial, sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 4px;
+}
+
+body.sim-ui-v2 .panel-body .form-description {
+    font-family: 'Bricolage Grotesque', Arial, sans-serif;
+    font-weight: 300;
+    font-size: 0.88rem;
+    color: #3d3939;
+}
+
+body.sim-ui-v2 .section-divider {
+    border: none;
+    border-top: 1px solid #000000;
+    margin: 18px 0 18px -20px;
+    width: calc(100% + 20px);
+}
+
+body.sim-ui-v2 #menu-picker-wood .category-divider {
+    display: none;
+}
+
+body.sim-ui-v2 .frame-accordion-item {
+    border-bottom: 1px solid #000000;
+    margin-left: -20px;
+    padding-left: 20px;
+}
+
+body.sim-ui-v2 .frame-accordion-item:first-child {
+    border-top: none;
+}
+
+body.sim-ui-v2 .frame-accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    cursor: pointer;
+    padding: 14px 0 10px 0;
+    user-select: none;
+}
+
+body.sim-ui-v2 .frame-accordion-header:hover {
+    opacity: 0.75;
+}
+
+body.sim-ui-v2 .accordion-title-group {
+    flex: 1;
+}
+
+body.sim-ui-v2 .frame-accordion-item .category-header {
+    margin-bottom: 2px;
+}
+
+body.sim-ui-v2 .frame-accordion-item .category-description {
+    margin-bottom: 0;
+    font-weight: 300;
+    font-size: 0.85rem;
+}
+
+body.sim-ui-v2 .accordion-chevron {
+    font-size: 20px;
+    font-weight: 300;
+    color: #444;
+    line-height: 1;
+    margin-left: 10px;
+    margin-right: 12px;
+    padding: 4px 8px;
+    transition: transform 0.2s ease;
+    display: inline-block;
+}
+
+body.sim-ui-v2 .accordion-chevron::before {
+    content: '⌄';
+}
+
+body.sim-ui-v2 .frame-accordion-item.open .accordion-chevron {
+    transform: rotate(-90deg);
+}
+
+body.sim-ui-v2 .frame-accordion-item.closed .accordion-chevron {
+    transform: rotate(0deg);
+}
+
+body.sim-ui-v2 .frame-accordion-body {
+    overflow: hidden;
+    max-height: 600px;
+    opacity: 1;
+    transition: max-height 0.28s ease, opacity 0.2s ease;
+    padding-bottom: 12px;
+}
+
+body.sim-ui-v2 .frame-accordion-item.closed .frame-accordion-body {
+    max-height: 0;
+    opacity: 0;
+    padding-bottom: 0;
+}
+
+body.sim-ui-v2 #precio {
+    color: #000 !important;
+    text-shadow: none !important;
+    font-size: 2rem !important;
+    font-weight: 700;
+    font-family: 'Bricolage Grotesque', Arial, sans-serif;
+}
+
+body.sim-ui-v2 #small-price-text {
+    font-size: 0.85rem;
+    color: #666;
+    margin-left: 8px;
+    font-weight: 300;
+    vertical-align: middle;
+}
+
+body.sim-ui-v2 .precioline {
+    display: flex !important;
+    align-items: baseline;
+    gap: 6px;
+    margin-top: 20px;
+    margin-bottom: 4px;
+}
+
+body.sim-ui-v2 .btn.btn-block.submit {
+    background-color: #000 !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 0 !important;
+    padding: 15px 20px !important;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-align: left !important;
+    margin-top: 10px;
+    margin-left: -20px !important;
+    width: calc(100% + 20px) !important;
+    cursor: pointer;
+    font-family: 'Bricolage Grotesque', Arial, sans-serif;
+}
+
+body.sim-ui-v2 .btn.btn-block.submit:hover {
+    background-color: #222 !important;
+}
+
+body.sim-ui-v2 .post-cart-summary {
+    background-color: rgb(242, 242, 242);
+    margin-left: -20px;
+    width: calc(100% + 20px);
+    padding: 14px 20px 16px 20px;
+}
+
+body.sim-ui-v2 .carousel-wrap {
+    position: relative;
+    width: 100%;
+    margin-top: 14px;
+}
+
+body.sim-ui-v2 .carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.90);
+    border: 1px solid #000;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1;
+    padding: 0;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+body.sim-ui-v2 .carousel-btn:hover {
+    background: #000;
+    color: #fff;
+}
+
+body.sim-ui-v2 .carousel-prev {
+    left: 0;
+}
+
+body.sim-ui-v2 .carousel-next {
+    right: 0;
+}
+
+body.sim-ui-v2 .carousel-btn.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+body.sim-ui-v2 ol.picture-examples {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    gap: 4px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    width: 100%;
+}
+
+body.sim-ui-v2 ol.picture-examples::-webkit-scrollbar {
+    display: none;
+}
+
+body.sim-ui-v2 ol.picture-examples li {
+    flex: 0 0 calc((100% - 8px) / 3);
+    display: block !important;
+    padding: 0 !important;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+body.sim-ui-v2 ol.picture-examples li img {
+    width: 100% !important;
+    height: 110px !important;
+    object-fit: cover;
+    display: block;
+    border-radius: 2px;
+    transition: opacity 0.15s ease;
+}
+
+body.sim-ui-v2 ol.picture-examples li:hover img {
+    opacity: 0.75;
+}
+
+body.sim-ui-v2 .panel-body {
+    overflow-y: auto;
+    max-height: calc(100vh - 80px);
+}
+
+body.sim-ui-v2 .panel.panel-default {
+    border: 1px solid #000000;
+    overflow: hidden;
+    display: flex;
+    align-items: stretch;
+}
+
+body.sim-ui-v2 div.thumbnail {
+    float: none !important;
+    flex: 0 0 55%;
+    width: 55%;
+    min-height: 100%;
+    align-self: stretch;
+    border-right: 1px solid #000000 !important;
+    padding-right: 0;
+    box-sizing: border-box;
+}
+
+body.sim-ui-v2 div.panel-body {
+    float: none !important;
+    flex: 1 1 45%;
+    width: 45%;
+    padding-left: 20px;
+    padding-top: 12px;
+    border-left: none;
+    box-sizing: border-box;
+}
+
+@media screen and (max-width: 768px) {
+    body.sim-ui-v2 .panel-body {
+        max-height: none;
+        overflow-y: visible;
+    }
+
+    body.sim-ui-v2 .sim-page-title {
+        font-size: 1.4rem;
+    }
+
+    body.sim-ui-v2 .panel.panel-default {
+        border: none;
+        border-top: 1px solid #000000;
+        display: block;
+    }
+
+    body.sim-ui-v2 div.thumbnail {
+        float: none !important;
+        flex: none;
+        width: 100%;
+        min-height: 0;
+        border-right: none !important;
+        border-bottom: 1px solid #000000;
+        padding-right: 0;
+    }
+
+    body.sim-ui-v2 div.panel-body {
+        float: none !important;
+        flex: none;
+        width: 100%;
+        padding-left: 10px;
+        padding-right: 10px;
+        border-top: none;
     }
 }

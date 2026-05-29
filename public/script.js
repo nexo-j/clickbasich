@@ -267,6 +267,48 @@ function setFullHeightInDescription () {
   $('#anchot').text(Number(anchoTotal).toFixed(2))
 }
 
+function initPictureExamplesCarousel () {
+  var ol = document.querySelector('ol.picture-examples.large-only')
+  if (!ol) return
+  var wrap = ol.parentElement
+  if (!wrap || !wrap.classList.contains('carousel-wrap')) return
+  if (wrap._carouselReady) return
+  wrap._carouselReady = true
+
+  var btnPrev = wrap.querySelector('.carousel-prev')
+  var btnNext = wrap.querySelector('.carousel-next')
+  if (!btnPrev || !btnNext) return
+
+  function getSlideWidth () {
+    var li = ol.querySelector('li')
+    if (!li) return ol.offsetWidth / 3
+    var gap = parseFloat(window.getComputedStyle(ol).gap) || 4
+    return li.offsetWidth + gap
+  }
+
+  function updateButtons () {
+    var atStart = ol.scrollLeft <= 2
+    var atEnd = ol.scrollLeft >= ol.scrollWidth - ol.offsetWidth - 2
+    btnPrev.classList.toggle('hidden', atStart)
+    btnNext.classList.toggle('hidden', atEnd || ol.scrollWidth <= ol.offsetWidth + 2)
+  }
+
+  btnPrev.addEventListener('click', function () {
+    ol.scrollBy({ left: -getSlideWidth(), behavior: 'smooth' })
+  })
+  btnNext.addEventListener('click', function () {
+    ol.scrollBy({ left: getSlideWidth(), behavior: 'smooth' })
+  })
+  ol.addEventListener('scroll', updateButtons)
+
+  var observer = new MutationObserver(function () {
+    setTimeout(updateButtons, 120)
+  })
+  observer.observe(ol, { childList: true })
+
+  updateButtons()
+}
+
 function syncPaspartuSliderUi () {
   var $slider = $('#paspartuSlider')
   if (!$slider.length) return
@@ -880,6 +922,7 @@ $(document).ready(function () {
   })
 
   checkInvetory()
+  setTimeout(initPictureExamplesCarousel, 200)
 
   $('.veil#picture-examples-veil').on('click', function () {
     $('.veil#picture-examples-veil').css('display', 'none')

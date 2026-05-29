@@ -63,7 +63,7 @@
     <meta property="twitter:image" content="https://marcos.clickmarqueteria.com/images/animation.gif">
 </head>
 
-<body>
+<body class="sim-ui-v2">
     <div class="veil" id="sizepicker">
         <div class="veil-modal">
             <h2>Elige el tamaño de tu imagen <span class="dark">(ancho x alto)</span></h2>
@@ -86,6 +86,7 @@
         <a href="//clickmarqueteria.com"><img src="../images/Click_Logo.png"></a>
         <a href="./dimensiones.html" class="back">Regresa a la tienda<span class="x">✕</span></a></header>
     <div class="container">
+        <p class="sim-page-title form-title" data-text-key="mosaico.header.title">Diseña tu mosaico</p>
         <div class="panel panel-default">
             <div class="thumbnail off">
                 <div class="background-container">
@@ -336,8 +337,12 @@
                 </div>
                 <a class="size-guide-text" href="#" data-text-key="global.navigation.sizeGuide">Guía de tamaños</a>
                 <img class="size-guide-image" src="../images/guiadetamano.jpg" />
-                <ol class="picture-examples large-only">
-                </ol>
+                <div class="carousel-wrap">
+                    <button class="carousel-btn carousel-prev hidden" aria-label="Anterior">&#8592;</button>
+                    <ol class="picture-examples large-only">
+                    </ol>
+                    <button class="carousel-btn carousel-next hidden" aria-label="Siguiente">&#8594;</button>
+                </div>
             </div>
             <div class="panel-body">
                 <!-- <p>¡Enmarca tu foto!</p> -->
@@ -345,7 +350,6 @@
                     <a class="sizepicker-back" href="/mosaico/dimensiones.html">
                         <i class="fa fa-arrow-left" aria-hidden="true"></i> <span class="back-text">Cambia el tamaño</span>
                     </a>
-                    <p class="form-title morandi" data-text-key="mosaico.header.title">Diseña tu mosaico</p>
                     <div class="form-group cppp">
                         <span>Filas </span>
                         <input type="number" name="mosaicoAlto" min="1" max="5" step="1" /><span> x Columnas </span><input type="number" name="mosaicoAncho" min="1" max="5" step="1" />
@@ -367,7 +371,6 @@
                         </div>
                         <div class="mce_response"> </div>
                     </div>
-                    <hr class="category-divider">
                     <p class="form-title" data-text-key="global.paspartu.title">Agrega Paspartú:</p>
                     <p class="form-description" data-text-key="global.paspartu.description">Borde que se deja entre el marco y tu obra para resaltarla aún más.</p>
                     <div class="form-group cppp">
@@ -391,33 +394,38 @@
                             </ol>
                         </div>
                     </div>
+                    <hr class="section-divider">
                     <p class="form-title" data-text-key="global.acrilic.title">Tipo de Acrílico:</p>
                     <p class="form-description" data-text-key="global.acrilic.description">En CLICK no usamos vidrio. Usamos acrílico 100% transparente que es más liviano y resistente.</p>
                     <div class="form-group cppp acrilic" id="acrilics"></div>
-                    <div class="form-group cppp">
+                    <div class="form-group cppp" style="display:none">
                         <ol class="picture-examples medium-only">
                         </ol>
                     </div>
+
+                    <hr class="section-divider">
                     <div class="form-group cppp precioline">
-                        <label for="price">Precio de Photo Wall: <span id="slider-step-value"></span></label><span id="precio">0</span><span id="small-price-text">IVA Incluido</span>
+                        <span id="precio">0</span><span id="small-price-text">IVA Incluido</span>
                     </div>
 
                     <button class="btn btn-filestack btn-block submit" data-text-key="global.cart.button">Agregar al carrito</button>
 
-                    <p data-text-key="global.cart.delivery">Selecciona el modo de entrega en el próximo paso</p>
+                    <div class="post-cart-summary">
+                        <p data-text-key="global.cart.delivery">Selecciona el modo de entrega en el próximo paso</p>
 
-                    <p class="description-thingy">
-                        <span class="full-desc">
-									<b>Medidas de tus imagenes:</b>
-									Alto: <span id="alto">10</span>cm - Largo: <span id="ancho">10</span>cm<br/><span class="invsbl"> -</span>
-                        <b>Medidas totales de cada marco:</b> Alto: <span id="altot"></span>cm - Largo: <span id="anchot"></span>cm<br/><span class="invsbl"> -</span>
-                        <b>Marcos: </b><span id="acabado">Resina Negro</span> <span id="marco">2</span>cm<br/><span class="invsbl"> -</span>
-                        <b>Paspartús: </b><span id="paspartuc">Blanco</span> <span id="borde">7</span>cm<br/><span class="invsbl"> -</span>
-                        <b>Frentes: </b><span id="frente"></span><br/><span class="invsbl"> -</span>
-                        <b>Impresion: </b><span id="impresion">Color</span><br/><span class="invsbl"> -</span>
-                        <span id="desc-gallery"></span><br/><span class="invsbl"> -</span>
-                        </span>
-                    </p>
+                        <p class="description-thingy">
+                            <span class="full-desc">
+                                <b>Medidas de tus imagenes:</b>
+                                Alto: <span id="alto">10</span>cm - Largo: <span id="ancho">10</span>cm<br/><span class="invsbl"> -</span>
+                                <b>Medidas totales de cada marco:</b> Alto: <span id="altot"></span>cm - Largo: <span id="anchot"></span>cm<br/><span class="invsbl"> -</span>
+                                <b>Marcos: </b><span id="acabado">Resina Negro</span> <span id="marco">2</span>cm<br/><span class="invsbl"> -</span>
+                                <b>Paspartús: </b><span id="paspartuc">Blanco</span> <span id="borde">7</span>cm<br/><span class="invsbl"> -</span>
+                                <b>Frentes: </b><span id="frente"></span><br/><span class="invsbl"> -</span>
+                                <b>Impresion: </b><span id="impresion">Color</span><br/><span class="invsbl"> -</span>
+                                <span id="desc-gallery"></span><br/><span class="invsbl"> -</span>
+                            </span>
+                        </p>
+                    </div>
 
                     <div></div>
                 </form>
@@ -429,6 +437,7 @@
     <script src="https://static.filestackapi.com/filestack-js/3.x.x/filestack.min.js"></script>
     <!--<script src="https://static.filestackapi.com/transforms-ui/1.x.x/transforms.umd.min.js"></script>-->
     <script src="../js/utilities.js"></script>
+    <script>window.useFrameAccordion = true</script>
     <script src="../script.js"></script>
     <script src="mosaic.js"></script>
     <div id="texture-floating"><img src=""><span class="desc-texture"></span></div>
