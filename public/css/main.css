@@ -6613,7 +6613,7 @@ ol.menu-picker li:hover .label-hover {
 }
 
 .home-menu>.grid__item>a>img {
-    width: 65%;
+    width: 50%;
     height: auto;
     display: block;
     margin-left: auto;
