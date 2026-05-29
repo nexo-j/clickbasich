@@ -7525,6 +7525,7 @@ body.sim-ui-v2 .panel-body .form-title {
     font-weight: 600;
     font-size: 1rem;
     margin-bottom: 4px;
+    color: #000000;
 }
 
 body.sim-ui-v2 .panel-body .form-description {
