@@ -280,10 +280,12 @@ function initPictureExamplesCarousel () {
   if (!btnPrev || !btnNext) return
 
   function getSlideWidth () {
+    var slide = ol.querySelector('.carousel-slide')
     var li = ol.querySelector('li')
-    if (!li) return ol.offsetWidth / 3
-    var gap = parseFloat(window.getComputedStyle(ol).gap) || 4
-    return li.offsetWidth + gap
+    var el = slide || li
+    if (!el) return ol.offsetWidth / 3
+    var gap = parseFloat(window.getComputedStyle(ol).gap) || 8
+    return el.offsetWidth + gap
   }
 
   function updateButtons () {
@@ -965,7 +967,7 @@ $(document).ready(function () {
     $('.picture-examples').html('')
     const galleryImages = $(this).attr('data-images').split(',')
     galleryImages.forEach(image => $('.picture-examples').append(`<li>
-      <img src="${image}"/>
+      <div class="carousel-slide"><img src="${image}" alt=""/></div>
   </li>`).children(':last').hide().fadeIn(500))
   })
   $('.slider-labels').on('click', 'li', (e) => {

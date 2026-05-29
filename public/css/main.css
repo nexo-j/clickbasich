@@ -7710,14 +7710,17 @@ body.sim-ui-v2 .post-cart-summary {
 }
 
 body.sim-ui-v2 .carousel-wrap {
+    --carousel-slide-width: 200px;
+    --carousel-slide-height: 120px;
     position: relative;
     width: 100%;
     margin-top: 0;
-    min-height: 110px;
-    overflow: hidden;
+    height: var(--carousel-slide-height);
+    min-height: var(--carousel-slide-height);
+    overflow: visible;
 }
 
-body.sim-ui-v2 .carousel-btn {
+body.sim-ui-v2 .carousel-wrap .carousel-btn {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -7754,50 +7757,87 @@ body.sim-ui-v2 .carousel-btn.hidden {
     pointer-events: none;
 }
 
-body.sim-ui-v2 ol.picture-examples {
+body.sim-ui-v2 .carousel-wrap ol.picture-examples {
     display: flex !important;
     flex-direction: row !important;
-    align-items: stretch;
+    flex-wrap: nowrap;
+    align-items: center;
     overflow-x: auto;
     overflow-y: hidden;
+    scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    gap: 4px;
-    padding: 0 32px;
+    gap: 8px;
+    padding: 0 36px;
     margin: 0;
     list-style: none;
     width: 100%;
-    min-height: 110px;
+    height: var(--carousel-slide-height);
+    min-height: var(--carousel-slide-height);
+    max-height: var(--carousel-slide-height);
     box-sizing: border-box;
 }
 
-body.sim-ui-v2 ol.picture-examples::-webkit-scrollbar {
+body.sim-ui-v2 .carousel-wrap ol.picture-examples::-webkit-scrollbar {
     display: none;
 }
 
-body.sim-ui-v2 ol.picture-examples li {
-    flex: 0 0 calc((100% - 8px) / 3);
-    display: block !important;
+body.sim-ui-v2 .carousel-wrap ol.picture-examples li {
+    scroll-snap-align: start;
+    flex: 0 0 auto;
+    flex-shrink: 0;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
     padding: 0 !important;
+    margin: 0;
+    width: auto;
+    height: var(--carousel-slide-height);
+    min-height: var(--carousel-slide-height);
     cursor: pointer;
-    overflow: hidden;
-    height: 110px;
-    min-width: 0;
+    overflow: visible;
+    position: relative;
 }
 
-body.sim-ui-v2 ol.picture-examples li img {
+body.sim-ui-v2 .carousel-wrap .carousel-slide {
+    flex-shrink: 0;
+    width: var(--carousel-slide-width);
+    height: var(--carousel-slide-height);
+    min-width: var(--carousel-slide-width);
+    min-height: var(--carousel-slide-height);
+    overflow: hidden;
+    border-radius: 4px;
+    background: #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+body.sim-ui-v2 .carousel-wrap .carousel-slide img {
     width: 100% !important;
-    height: 110px !important;
+    height: 100% !important;
+    min-width: 100%;
+    min-height: 100%;
+    max-width: none !important;
+    max-height: none !important;
     object-fit: cover;
     display: block;
-    border-radius: 2px;
+    border-radius: 4px;
     transition: opacity 0.15s ease;
 }
 
-body.sim-ui-v2 ol.picture-examples li:hover img {
+body.sim-ui-v2 .carousel-wrap ol.picture-examples li:hover .carousel-slide img {
     opacity: 0.75;
+}
+
+@media screen and (min-width: 992px) {
+    body.sim-ui-v2 .carousel-wrap {
+        --carousel-slide-width: 220px;
+        --carousel-slide-height: 140px;
+    }
 }
 
 body.sim-ui-v2 .panel-body {
