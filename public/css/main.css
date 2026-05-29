@@ -6938,6 +6938,12 @@ button.submit {
     margin: 60px auto;
 }
 
+.hero-container h1 {
+    font-family: 'Bricolage Grotesque', 'Lato', sans-serif;
+    font-weight: 700;
+    text-transform: none;
+}
+
 .side-left {
     width: 50%;
     float: left;
@@ -6971,9 +6977,9 @@ div.hero-thing img {
 }
 
 .semi-title {
-    text-transform: uppercase;
+    text-transform: none;
     font-size: 1.5em;
-    font-weight: 600;
+    font-weight: 500;
     margin-bottom: 10px;
     display: block;
 }
