@@ -389,6 +389,22 @@ function categoryWidthSection (slug) {
   return '<div class="category-width-section"><p class="form-title">Ancho de frente:</p><div class="category-widthOptions" data-category-width="' + slug + '"></div></div>'
 }
 
+var FRAME_CATEGORY_DESCRIPTION_OVERRIDES = {
+  standard: 'Marcos en plástico, ideales para composiciones livianas y a un precio más accesible.',
+  premium: 'Marcos en madera natural con calidad de galería. Hechos y pintados a mano.'
+}
+
+var FRAME_CATEGORY_DESCRIPTION_LEGACY = {
+  'Marcos en plástico (resina), casi idénticos a los de madera pero a un precio más accesible.': FRAME_CATEGORY_DESCRIPTION_OVERRIDES.standard,
+  'Marcos en madera natural con acabado artesanal.': FRAME_CATEGORY_DESCRIPTION_OVERRIDES.premium
+}
+
+function resolveCategoryDescription (slug, descripcion) {
+  if (FRAME_CATEGORY_DESCRIPTION_OVERRIDES[slug]) return FRAME_CATEGORY_DESCRIPTION_OVERRIDES[slug]
+  if (FRAME_CATEGORY_DESCRIPTION_LEGACY[descripcion]) return FRAME_CATEGORY_DESCRIPTION_LEGACY[descripcion]
+  return descripcion
+}
+
 function renderFrames (sortedFrames, frameCategories) {
   var useAccordion = !!window.useFrameAccordion
   const activeCategories = Array.isArray(frameCategories)
@@ -427,7 +443,7 @@ function renderFrames (sortedFrames, frameCategories) {
   activeCategories.forEach(function (category) {
     var slug = category.identificador || category.slug
     var nombre = category.nombre || category.name || slug
-    var descripcion = category.descripcion || category.description || ''
+    var descripcion = resolveCategoryDescription(slug, category.descripcion || category.description || '')
     var indices = categoryMap[slug] || []
     if (indices.length === 0) return
 
