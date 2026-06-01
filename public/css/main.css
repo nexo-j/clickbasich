@@ -7835,8 +7835,8 @@ body.sim-ui-v2 .carousel-wrap ol.picture-examples li:hover .carousel-slide img {
 
 @media screen and (min-width: 992px) {
     body.sim-ui-v2 .carousel-wrap {
-        --carousel-slide-width: 220px;
-        --carousel-slide-height: 140px;
+        --carousel-slide-width: 290px;
+        --carousel-slide-height: 280px;
     }
 }
 
