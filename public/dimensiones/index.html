@@ -25,7 +25,7 @@
         <p></p>
         <p style="text-align: center;">Mide el alto y el largo de lo que quieres enmarcar y pon las medidas aquí:</p>
 
-        <div class="prompt-dimensiones"><b>Alto:</b><input type="number" value=15 name="alto" class="nm-in" min="10" max="180" step="0.5" id="alto">cm <span class="input-separator">X</span> <b>Largo:</b> <input type="number" value=15 name="ancho" class="nm-in" min="10" max="180" step="0.5"
+        <div class="prompt-dimensiones"><b>Alto:</b><input type="number" value=15 name="alto" class="nm-in" min="10" max="100" step="0.5" id="alto">cm <span class="input-separator">X</span> <b>Largo:</b> <input type="number" value=15 name="ancho" class="nm-in" min="10" max="100" step="0.5"
                 id="ancho">cm
             <button id="btn-enmarca" class="btn enmarca">Crea un marco</button></div>
 
@@ -34,23 +34,25 @@
 
     <script src="//code.jquery.com/jquery-3.0.0.min.js"></script>
     <script>
+        const MAX_MEASUREMENT = 100
+
+        function clampMeasurement ($input) {
+            var min = parseFloat($input.attr('min'))
+            var val = parseFloat($input.val())
+            if (isNaN(val)) return
+            if (val < min) $input.val(min)
+            else if (val > MAX_MEASUREMENT) $input.val(MAX_MEASUREMENT)
+        }
+
         $('.enmarca').on('click', function() {
-            var ancho = $('#ancho').val();
-            var alto = $('#alto').val();
-            window.location.href = '/marco?alto=' + alto + '&ancho=' + ancho;
-        });
-        const maximumMeasurements = [150, 100] //Sorted from big to small
-        $(".nm-in").change(function() {
-            var min = parseInt($(this).attr('min'));
-            if ($(this).val() < min) $(this).val(min);
-        });
-        $('#ancho').change(function() {
-            if ($(this).val() > maximumMeasurements[0]) $(this).val(maximumMeasurements[0])
-            if ($('#alto').val() > maximumMeasurements[1]) $(this).val(maximumMeasurements[1])
+            clampMeasurement($('#alto'))
+            clampMeasurement($('#ancho'))
+            var ancho = $('#ancho').val()
+            var alto = $('#alto').val()
+            window.location.href = '/marco?alto=' + alto + '&ancho=' + ancho
         })
-        $('#alto').change(function() {
-            if ($(this).val() > maximumMeasurements[0]) $(this).val(maximumMeasurements[0])
-            if ($('#ancho').val() > maximumMeasurements[1]) $(this).val(maximumMeasurements[1])
+        $('.nm-in').on('change', function() {
+            clampMeasurement($(this))
         })
         $('#ancho').on('keyup', function(event) {
             if (event.keyCode === 13) {
