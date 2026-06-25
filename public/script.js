@@ -388,7 +388,31 @@ function frameItemHtml (frame, index) {
 }
 
 function categoryWidthSection (slug) {
-  return '<div class="category-width-section"><p class="form-title">Ancho de frente:</p><div class="category-widthOptions" data-category-width="' + slug + '"></div></div>'
+  var html = '<div class="category-width-section"><p class="form-title">Ancho de frente:</p><div class="category-widthOptions" data-category-width="' + slug + '"></div>'
+  if (slug === 'standard') {
+    html += '<p class="standard-plastic-size-message" style="display:none">Este tamaño es demasiado grande para el marco plástico. Escoge una medida más pequeña para poder seleccionar este material.</p>'
+  }
+  html += '</div>'
+  return html
+}
+
+var STANDARD_PLASTIC_MAX_CM = 50
+
+function isStandardPlasticSizeInvalid () {
+  var alto = Number($('#alto').text())
+  var ancho = Number($('#ancho').text())
+  return alto > STANDARD_PLASTIC_MAX_CM || ancho > STANDARD_PLASTIC_MAX_CM
+}
+
+function updateStandardPlasticSizeMessage () {
+  if (window.location.pathname !== '/marco/') return
+  var $msg = $('.standard-plastic-size-message')
+  if (!$msg.length) return
+  if (isStandardPlasticSizeInvalid()) {
+    $msg.show()
+  } else {
+    $msg.hide()
+  }
 }
 
 var FRAME_CATEGORY_DESCRIPTION_OVERRIDES = {
@@ -544,6 +568,7 @@ function checkInvetory () {
     frames = inventory.frames
     frames.sort((a, b) => a.position - b.position)
     renderFrames(frames, inventory.frameCategories)
+    updateStandardPlasticSizeMessage()
     // Populate paspartu
     const paspartus = inventory.paspartus
     paspartus.sort((a, b) => a.position - b.position)
@@ -1094,6 +1119,7 @@ $(document).ready(function () {
     window.soloMarco = true
     $('.container-sm').css('padding-bottom', (pad) + '%')
     updatePrice()
+    updateStandardPlasticSizeMessage()
   }
   actualizarDimensiones()
 

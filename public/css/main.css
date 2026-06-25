@@ -6558,6 +6558,13 @@ ol.menu-picker li {
     margin-top: 12px;
 }
 
+.standard-plastic-size-message {
+    color: #FF0000;
+    margin-top: 10px;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
 .category-width-section .bordert + label {
     margin-right: 16px;
 }
