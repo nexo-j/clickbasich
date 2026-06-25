@@ -6052,7 +6052,7 @@ a.filepicker:hover {
     display: none;
 }
 
-/* Paspartú slider v2 — barra naranja #f36943 */
+/* Paspartú slider v2 */
 .paspartu-slider-v2.slider-container,
 .paspartu-slider-v2 .slider-container,
 .slider-container.paspartu-slider-v2 {
@@ -6071,7 +6071,7 @@ a.filepicker:hover {
     margin: 0;
     padding: 0;
     border-radius: 999px;
-    background: #000000;
+    background: #F3F3F3;
     outline: none;
     -webkit-appearance: none;
     appearance: none;
@@ -6084,23 +6084,23 @@ a.filepicker:hover {
     border-radius: 999px;
     background: linear-gradient(
         to right,
-        #a30041 0%,
-        #a30041 var(--slider-pct, 0%),
-        #000000 var(--slider-pct, 0%),
-        #000000 100%
+        #404040 0%,
+        #404040 var(--slider-pct, 0%),
+        #F3F3F3 var(--slider-pct, 0%),
+        #F3F3F3 100%
     );
 }
 
 .paspartu-slider-v2 .slider::-moz-range-track {
     height: 14px;
     border-radius: 999px;
-    background: #000000;
+    background: #F3F3F3;
 }
 
 .paspartu-slider-v2 .slider::-moz-range-progress {
     height: 14px;
     border-radius: 999px 0 0 999px;
-    background: #a30041;
+    background: #404040;
 }
 
 .paspartu-slider-v2 .slider::-webkit-slider-thumb {
@@ -6110,7 +6110,7 @@ a.filepicker:hover {
     height: 30px;
     margin-top: -8px;
     border-radius: 50%;
-    background: #a30041;
+    background: #404040;
     border: 3px solid #ffffff;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.18);
     cursor: grab;
@@ -6124,7 +6124,7 @@ a.filepicker:hover {
     width: 30px;
     height: 30px;
     border-radius: 50%;
-    background: #a30041;
+    background: #404040;
     border: 3px solid #ffffff;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.18);
     cursor: grab;
@@ -6165,8 +6165,8 @@ a.filepicker:hover {
     display: none;
 }
 
-.paspartu-slider-v2 .slider-labels li.selected::before {
-    display: none;
+.paspartu-slider-v2 .slider-labels li.selected {
+    color: #404040;
 }
 
 .checkbox {
