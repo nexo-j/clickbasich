@@ -1015,6 +1015,7 @@ $(document).ready(function () {
   })
 
   $('#subscribe').on('click', function (e) {
+    if (!$(this).closest('.out-of-stock-form-paspartu').length) return
     e.preventDefault()
     const email = $('#mce-EMAIL').val()
     var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
