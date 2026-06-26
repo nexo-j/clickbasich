@@ -405,7 +405,7 @@ function isStandardPlasticSizeInvalid () {
 }
 
 function updateStandardPlasticSizeMessage () {
-  if (window.location.pathname !== '/marco/') return
+  if (window.location.pathname !== '/marco/' && window.location.pathname !== '/mosaico/') return
   var $msg = $('.standard-plastic-size-message')
   if (!$msg.length) return
   if (isStandardPlasticSizeInvalid()) {
@@ -1119,6 +1119,8 @@ $(document).ready(function () {
     window.soloMarco = true
     $('.container-sm').css('padding-bottom', (pad) + '%')
     updatePrice()
+  }
+  if (window.location.pathname === '/marco/' || window.location.pathname === '/mosaico/') {
     updateStandardPlasticSizeMessage()
   }
   actualizarDimensiones()
