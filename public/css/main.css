@@ -7815,7 +7815,7 @@ body.sim-ui-v2 .carousel-wrap .carousel-slide {
     min-width: var(--carousel-slide-width);
     min-height: var(--carousel-slide-height);
     overflow: hidden;
-    border-radius: 4px;
+    border-radius: 0;
     background: #eee;
     display: flex;
     align-items: center;
@@ -7832,7 +7832,7 @@ body.sim-ui-v2 .carousel-wrap .carousel-slide img {
     max-height: none !important;
     object-fit: cover;
     display: block;
-    border-radius: 4px;
+    border-radius: 0;
     transition: opacity 0.15s ease;
 }
 
