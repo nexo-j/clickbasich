@@ -399,13 +399,18 @@ function categoryWidthSection (slug) {
 var STANDARD_PLASTIC_MAX_CM = 50
 
 function isStandardPlasticSizeInvalid () {
+  // En /imagen/ el tamaño se elige en el sizepicker: si el usuario escoge
+  // una opción "no recomendada" por resolución, se considera inválido.
+  if (window.location.pathname === '/imagen/') {
+    return !!window.imagenSizeNotRecommended
+  }
   var alto = Number($('#alto').text())
   var ancho = Number($('#ancho').text())
   return alto > STANDARD_PLASTIC_MAX_CM || ancho > STANDARD_PLASTIC_MAX_CM
 }
 
 function updateStandardPlasticSizeMessage () {
-  if (window.location.pathname !== '/marco/' && window.location.pathname !== '/mosaico/') return
+  if (window.location.pathname !== '/marco/' && window.location.pathname !== '/mosaico/' && window.location.pathname !== '/imagen/') return
   var $msg = $('.standard-plastic-size-message')
   if (!$msg.length) return
   if (isStandardPlasticSizeInvalid()) {
@@ -950,6 +955,8 @@ $(document).ready(function () {
     var width = $(this).attr('data-width')
     var height = $(this).attr('data-height')
 
+    window.imagenSizeNotRecommended = $(this).closest('#badoptions').length > 0
+
     $('#alto').text(Number(height).toFixed(2))
     $('#ancho').text(Number(width).toFixed(2))
 
@@ -957,6 +964,7 @@ $(document).ready(function () {
     populatePaspartuWidths()
 
     updatePrice()
+    updateStandardPlasticSizeMessage()
 
     // Esconder velox
     $('.veil#sizepicker').css('display', 'none')
