@@ -481,8 +481,7 @@ function renderFrames (sortedFrames, frameCategories) {
     hasVisibleFrames = true
 
     if (useAccordion) {
-      var openClass = isFirstCategory ? 'open' : 'closed'
-      html += '<div class="frame-accordion-item ' + openClass + '">'
+      html += '<div class="frame-accordion-item closed">'
       html += '<div class="frame-accordion-header">'
       html += '<div class="accordion-title-group">'
       html += '<p class="category-header">' + nombre + '</p>'
@@ -1036,6 +1035,7 @@ $(document).ready(function () {
     if ($item.hasClass('open')) {
       $item.removeClass('open').addClass('closed')
     } else {
+      $('.frame-accordion-item').not($item).removeClass('open').addClass('closed')
       $item.removeClass('closed').addClass('open')
     }
   })
