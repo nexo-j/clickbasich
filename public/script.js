@@ -21,6 +21,7 @@ var anchoPaspartu = 7
 var frames = []
 var paspartuWidths = []
 var textsMap = {}
+var selectedFrameIndex = null
 
 // Preload images for better performance
 var Image1 = new Image()
@@ -397,6 +398,79 @@ function categoryWidthSection (slug) {
   return html
 }
 
+function getFrameWidthContainer (frameIndex) {
+  var frame = frames[frameIndex]
+  if (!frame) return $()
+  var catSlug = frame.categorySlug || 'default'
+  return $('.category-widthOptions[data-category-width="' + catSlug + '"]')
+}
+
+function getSelectedMarcoWidthCm () {
+  if (selectedFrameIndex != null) {
+    var $checked = getFrameWidthContainer(selectedFrameIndex).find('input[name="marco"]:checked')
+    if ($checked.length) return Number($checked.val())
+    var variants = frames[selectedFrameIndex] && frames[selectedFrameIndex].variants
+    if (Array.isArray(variants) && variants.length) {
+      return Number(variants.slice().sort(function (a, b) { return Number(a.width) - Number(b.width) })[0].width)
+    }
+  }
+  var $fallback = $('input[name="marco"]:checked')
+  if ($fallback.length) return Number($fallback.val())
+  return 2
+}
+
+function updateWidthOptionStockState ($input) {
+  var $section = $input.closest('.category-width-section')
+  if ($input.attr('stock') === 'true') {
+    $section.find('.category-out-of-stock-message').hide()
+    $('.submit').show(400)
+  } else {
+    $section.find('.category-out-of-stock-message').show()
+    $('.submit').slideUp(400)
+  }
+}
+
+function populateFrameVariants (frameIndex) {
+  var frame = frames[frameIndex]
+  if (!frame) return
+  var variants = Array.isArray(frame.variants) ? frame.variants.slice() : []
+  var $widthContainer = getFrameWidthContainer(frameIndex)
+  $('input[name="marco"]').prop('checked', false)
+  variants.sort(function (a, b) { return Number(a.width) - Number(b.width) })
+  $widthContainer.html('')
+  variants.forEach(function (variant, i) {
+    var variantId = frame.name + '-width-' + i + '-' + variant.width
+    var width = Number(variant.width)
+    $widthContainer.append('<input type="radio" stock="' + variant.stock + '" class="bordert" data-code="' + (variant.code || '') + '" name="marco" value="' + width + '" id="' + variantId + '"><label for="' + variantId + '">' + variant.name + '</label>')
+  })
+  if (variants.length) {
+    var $first = $widthContainer.find('input:first')
+    $first.prop('checked', true)
+    updateWidthOptionStockState($first)
+  }
+}
+
+function selectFrame ($input) {
+  selectedFrameIndex = Number($input.attr('index'))
+  $('#acabado').text($input.attr('id'))
+  $('#frame-example-img').attr('src', $input.attr('example_image'))
+  $('.img-rounded').css('border-image-source', "url('" + $input.attr('border_image') + "')")
+  populateFrameVariants(selectedFrameIndex)
+  $('.picture-examples').html('')
+  var galleryImages = ($input.attr('data-images') || '').split(',')
+  galleryImages.forEach(function (image) {
+    if (!image) return
+    $('.picture-examples').append('<li><div class="carousel-slide"><img src="' + image + '" alt=""/></div></li>').children(':last').hide().fadeIn(500)
+  })
+  actualizarDimensiones()
+  updatePrice()
+}
+
+function activateFrameInput ($input) {
+  if (!$input.length) return
+  $input.prop('checked', true).trigger('change')
+}
+
 var STANDARD_PLASTIC_MAX_CM = 51
 
 function isStandardPlasticSizeInvalid () {
@@ -452,7 +526,7 @@ function renderFrames (sortedFrames, frameCategories) {
     }
     flatHtml += '</ol>' + categoryWidthSection('default')
     $('#menu-picker-wood').html(flatHtml)
-    $('#menu-picker-wood li').first().find('input').trigger('click')
+    $('#menu-picker-wood li').first().find('input[name="color-selection"]').each(function () { activateFrameInput($(this)) })
     return
   }
 
@@ -552,7 +626,7 @@ function renderFrames (sortedFrames, frameCategories) {
     }
     fallbackHtml += '</ol>' + categoryWidthSection('default')
     $('#menu-picker-wood').html(fallbackHtml)
-    $('#menu-picker-wood li').first().find('input').trigger('click')
+    $('#menu-picker-wood li').first().find('input[name="color-selection"]').each(function () { activateFrameInput($(this)) })
     return
   }
 
@@ -561,9 +635,9 @@ function renderFrames (sortedFrames, frameCategories) {
   // para que su "Ancho de frente" se muestre sin requerir un clic manual.
   var $openItem = $('#menu-picker-wood .frame-accordion-item.open')
   if ($openItem.length) {
-    $openItem.find('.category-frames li input').first().trigger('click')
+    activateFrameInput($openItem.find('.category-frames li input[name="color-selection"]').first())
   } else {
-    $('#menu-picker-wood li').first().find('input').trigger('click')
+    $('#menu-picker-wood li').first().find('input[name="color-selection"]').each(function () { activateFrameInput($(this)) })
   }
 }
 
@@ -652,7 +726,7 @@ function populatePaspartuWidths () {
 }
 
 function actualizarAnchoMarco () {
-  var input = $("input[name='marco']:checked").val() || 2
+  var input = getSelectedMarcoWidthCm()
   $('.img-rounded').css('border-width', (input * window.vwpercm) + 'vw')
   $('#marco').text(input)
   setFullHeightInDescription()
@@ -713,7 +787,7 @@ function actualizarTransformacion () {
   var photoWidthcm = Number($('#ancho').val()) || Number($('#ancho').text())
   var photoHeightcm = Number($('#alto').val()) || Number($('#alto').text())
   var widthPaspartucm = anchoPaspartu
-  var widthFrameBordercm = Number($("input[name='marco']:checked").val()) || 2
+  var widthFrameBordercm = getSelectedMarcoWidthCm()
   var parentWidth = pxTovw($('.thumbnail').width() - 100)
   var parentHeight = window.innerWidth < 768 ? pxTovw(window.innerHeight - 250) : pxTovw(window.innerHeight - 300)
   if (window.location.pathname === '/mosaico/dimensiones.html') parentHeight = pxTovw($('.thumbnail').height())
@@ -736,8 +810,8 @@ function getProductParamsV2 () {
     marcos.push({
       marco: {
         material: $('#acabado').text(),
-        grosor: Number($('#marco').val()),
-        code: $("input[name='marco']:checked").data('code')
+        grosor: getSelectedMarcoWidthCm(),
+        code: getFrameWidthContainer(selectedFrameIndex).find('input[name="marco"]:checked').data('code')
       },
       paspartu: {
         color: $("input[name='paspartuc']:checked").attr('Nombre'),
@@ -988,28 +1062,8 @@ $(document).ready(function () {
     $('body').css('overflow', 'initial')
   })
 
-  $('#menu-picker-wood').on('click', 'li input', function (event) {
-    $('#acabado').text($(this).attr('id'))
-    $('#frame-example-img').attr('src', $(this).attr('example_image'))
-    $('.img-rounded').css('border-image-source', "url('" + $(this).attr('border_image') + "')")
-    // Add variants in the category-specific widthOptions container
-    const frame = frames[$(this).attr('index')]
-    const variants = frame.variants
-    const catSlug = frame.categorySlug || 'default'
-    const $widthContainer = $('.category-widthOptions[data-category-width="' + catSlug + '"]')
-    variants.sort((a, b) => a.width - b.width)
-    $widthContainer.html('')
-    variants.forEach((variant, i) => {
-      $widthContainer.append(`<input type="radio" stock="${variant.stock}" class="bordert" data-code="${variant.code}" name="marco" value="${variant.width}" id="${variant.name}"><label for="${variant.name}">${variant.name}</label>`)
-    })
-    $widthContainer.find('input:first').trigger('click')
-    $widthContainer.find('input:first').attr('checked', true)
-    // Update Gallery
-    $('.picture-examples').html('')
-    const galleryImages = $(this).attr('data-images').split(',')
-    galleryImages.forEach(image => $('.picture-examples').append(`<li>
-      <div class="carousel-slide"><img src="${image}" alt=""/></div>
-  </li>`).children(':last').hide().fadeIn(500))
+  $('#menu-picker-wood').on('change', 'input[name="color-selection"]', function () {
+    selectFrame($(this))
   })
   $('.slider-labels').on('click', 'li', (e) => {
     $('#paspartuSlider').val($(e.target).index())
@@ -1049,7 +1103,7 @@ $(document).ready(function () {
       // Muestra el "Ancho de frente" del primer marco de la categoría abierta
       // si aún no se ha seleccionado ninguno.
       if ($item.find('.category-widthOptions input').length === 0) {
-        $item.find('.category-frames li input').first().trigger('click')
+        activateFrameInput($item.find('.category-frames li input[name="color-selection"]').first())
       }
     }
   })
@@ -1106,15 +1160,8 @@ $(document).ready(function () {
     }
   })
 
-  $(document).on('click', '.category-widthOptions input', function () {
-    var $section = $(this).closest('.category-width-section')
-    if ($(this).attr('stock') === 'true') {
-      $section.find('.category-out-of-stock-message').hide()
-      $('.submit').show(400)
-    } else {
-      $section.find('.category-out-of-stock-message').show()
-      $('.submit').slideUp(400)
-    }
+  $(document).on('change', '.category-widthOptions input[name="marco"]', function () {
+    updateWidthOptionStockState($(this))
     actualizarDimensiones()
     updatePrice()
   })
