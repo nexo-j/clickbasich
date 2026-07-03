@@ -400,14 +400,15 @@ function categoryWidthSection (slug) {
 var STANDARD_PLASTIC_MAX_CM = 51
 
 function isStandardPlasticSizeInvalid () {
-  // En /imagen/ el tamaño se elige en el sizepicker: si el usuario escoge
-  // una opción "no recomendada" por resolución, se considera inválido.
-  if (window.location.pathname === '/imagen/') {
-    return !!window.imagenSizeNotRecommended
-  }
   var alto = Number($('#alto').text())
   var ancho = Number($('#ancho').text())
-  return alto >= STANDARD_PLASTIC_MAX_CM || ancho >= STANDARD_PLASTIC_MAX_CM
+  var tooLarge = alto >= STANDARD_PLASTIC_MAX_CM || ancho >= STANDARD_PLASTIC_MAX_CM
+  // En /imagen/ el tamaño se elige en el sizepicker: inválido si el usuario
+  // escoge una opción "no recomendada" por resolución o si el tamaño supera el límite.
+  if (window.location.pathname === '/imagen/') {
+    return !!window.imagenSizeNotRecommended || tooLarge
+  }
+  return tooLarge
 }
 
 function updateStandardPlasticSizeMessage () {
