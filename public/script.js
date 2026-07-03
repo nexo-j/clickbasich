@@ -392,6 +392,7 @@ function categoryWidthSection (slug) {
   if (slug === 'standard') {
     html += '<p class="standard-plastic-size-message" style="display:none">Este tamaño es demasiado grande para el marco plástico. Escoge una medida más pequeña para poder seleccionar este material.</p>'
   }
+  html += '<p class="category-out-of-stock-message" style="display:none;color:#FF0000">Stock agotado temporalmente. ¡Pronto lo tendremos nuevamente!</p>'
   html += '</div>'
   return html
 }
@@ -421,7 +422,7 @@ function updateStandardPlasticSizeMessage () {
 }
 
 var FRAME_CATEGORY_DESCRIPTION_OVERRIDES = {
-  standard: 'Marcos en plástico, ideales para composiciones livianas y a un precio más accesible.',
+  standard: 'Marcos en plástico, ideales para composiciones livianas y a un precio más asequible.',
   premium: 'Marcos en madera natural con calidad de galería. Hechos y pintados a mano.'
 }
 
@@ -481,7 +482,8 @@ function renderFrames (sortedFrames, frameCategories) {
     hasVisibleFrames = true
 
     if (useAccordion) {
-      html += '<div class="frame-accordion-item closed">'
+      var openClass = slug === 'standard' ? 'open' : 'closed'
+      html += '<div class="frame-accordion-item ' + openClass + '">'
       html += '<div class="frame-accordion-header">'
       html += '<div class="accordion-title-group">'
       html += '<p class="category-header">' + nombre + '</p>'
@@ -554,7 +556,14 @@ function renderFrames (sortedFrames, frameCategories) {
   }
 
   $('#menu-picker-wood').html(html)
-  $('#menu-picker-wood li').first().find('input').trigger('click')
+  // Selecciona el primer marco de la categoría abierta (o el primero disponible)
+  // para que su "Ancho de frente" se muestre sin requerir un clic manual.
+  var $openItem = $('#menu-picker-wood .frame-accordion-item.open')
+  if ($openItem.length) {
+    $openItem.find('.category-frames li input').first().trigger('click')
+  } else {
+    $('#menu-picker-wood li').first().find('input').trigger('click')
+  }
 }
 
 function checkInvetory () {
@@ -631,12 +640,11 @@ function populatePaspartuWidths () {
   if (filteredPaspartuWidths.length === 0) {
     $('#paspartuWidths').append('<li value="0">0 cm</li>')
   }
-  // set default to 3cm if present
-  if (filteredPaspartuWidths.includes(3)) {
-    $('#paspartuWidths').val(3) // TODO check this triggers input event
-  } else {
-    $('#paspartuWidths').val(filteredPaspartuWidths[filteredPaspartuWidths.length - 1])
-  }
+  // set default to 5cm if present (fallback al mayor disponible)
+  var defaultWidthIndex = filteredPaspartuWidths.indexOf(5)
+  if (defaultWidthIndex < 0) defaultWidthIndex = filteredPaspartuWidths.length - 1
+  if (defaultWidthIndex < 0) defaultWidthIndex = 0
+  $('#paspartuSlider').val(defaultWidthIndex)
   if (filteredPaspartuWidths.length <= 1) showAlertMessage = true
   if (showAlertMessage) $('#paspartuWidths').after('<p style="color:red">Has llegado a la medida límite del paspartú. Escoge una imagen más pequeña para tener más opciones.</p>')
   $('#paspartuSlider').trigger('input')
@@ -1037,6 +1045,11 @@ $(document).ready(function () {
     } else {
       $('.frame-accordion-item').not($item).removeClass('open').addClass('closed')
       $item.removeClass('closed').addClass('open')
+      // Muestra el "Ancho de frente" del primer marco de la categoría abierta
+      // si aún no se ha seleccionado ninguno.
+      if ($item.find('.category-widthOptions input').length === 0) {
+        $item.find('.category-frames li input').first().trigger('click')
+      }
     }
   })
 
@@ -1093,11 +1106,12 @@ $(document).ready(function () {
   })
 
   $(document).on('click', '.category-widthOptions input', function () {
+    var $section = $(this).closest('.category-width-section')
     if ($(this).attr('stock') === 'true') {
-      $('.out-of-stock-form-frame').slideUp(400)
+      $section.find('.category-out-of-stock-message').hide()
       $('.submit').show(400)
     } else {
-      $('.out-of-stock-form-frame').show(400)
+      $section.find('.category-out-of-stock-message').show()
       $('.submit').slideUp(400)
     }
     actualizarDimensiones()
