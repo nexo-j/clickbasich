@@ -392,12 +392,12 @@ function categoryWidthSection (slug) {
   if (slug === 'standard') {
     html += '<p class="standard-plastic-size-message" style="display:none">Este tamaño es demasiado grande para el marco plástico. Escoge una medida más pequeña para poder seleccionar este material.</p>'
   }
-  html += '<p class="category-out-of-stock-message" style="display:none;color:#FF0000">Stock agotado temporalmente. ¡Pronto lo tendremos nuevamente!</p>'
+  html += '<p class="category-out-of-stock-message" style="display:none">Stock agotado temporalmente. ¡Pronto lo tendremos nuevamente!</p>'
   html += '</div>'
   return html
 }
 
-var STANDARD_PLASTIC_MAX_CM = 50
+var STANDARD_PLASTIC_MAX_CM = 51
 
 function isStandardPlasticSizeInvalid () {
   // En /imagen/ el tamaño se elige en el sizepicker: si el usuario escoge
@@ -407,7 +407,7 @@ function isStandardPlasticSizeInvalid () {
   }
   var alto = Number($('#alto').text())
   var ancho = Number($('#ancho').text())
-  return alto > STANDARD_PLASTIC_MAX_CM || ancho > STANDARD_PLASTIC_MAX_CM
+  return alto >= STANDARD_PLASTIC_MAX_CM || ancho >= STANDARD_PLASTIC_MAX_CM
 }
 
 function updateStandardPlasticSizeMessage () {

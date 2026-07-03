@@ -6558,7 +6558,8 @@ ol.menu-picker li {
     margin-top: 12px;
 }
 
-.standard-plastic-size-message {
+.standard-plastic-size-message,
+.category-out-of-stock-message {
     color: #FF0000;
     margin-top: 10px;
     font-size: 13px;
